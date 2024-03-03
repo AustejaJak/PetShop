@@ -1,13 +1,12 @@
 import { useState } from 'react'
+import { Routes as DomRoutes, Route } from "react-router-dom";
+import Routes from "../../routes/routes";
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import StatSectionComponent from "../statSectionComponent/statSectionComponent";
+import Footer from "../footer/footer";
 
 const navigation = [
-    { name: 'Product', href: '#' },
-    { name: 'Features', href: '#' },
-    { name: 'Marketplace', href: '#' },
-    { name: 'Company', href: '#' },
+    { name: 'Produktai', href: Routes.client.category },
 ]
 
 export default function HeroSectionComponent() {
@@ -45,8 +44,8 @@ export default function HeroSectionComponent() {
                         ))}
                     </div>
                     <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                        <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-                            Log in <span aria-hidden="true">&rarr;</span>
+                        <a href={Routes.client.login} className="text-sm font-semibold leading-6 text-gray-900">
+                            Prisijungti <span aria-hidden="true">&rarr;</span>
                         </a>
                     </div>
                 </nav>
@@ -123,7 +122,7 @@ export default function HeroSectionComponent() {
                     </div>
                     <div className="text-center">
                         <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                            Data to enrich your online business
+                            PetShop
                         </h1>
                         <p className="mt-6 text-lg leading-8 text-gray-600">
                             Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet
@@ -155,7 +154,8 @@ export default function HeroSectionComponent() {
                     />
                 </div>
             </div>
-            <StatSectionComponent />
+            <Footer/>
         </div>
+
     )
 }
