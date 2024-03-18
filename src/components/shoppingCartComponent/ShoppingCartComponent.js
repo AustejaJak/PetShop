@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import { MagnifyingGlassIcon, ShoppingBagIcon } from '@heroicons/react/24/outline'
 import { Popover, Transition } from '@headlessui/react'
+import Routes from "../../routes/routes";
 
 const products = [
     {
@@ -69,15 +70,15 @@ export default function ShoppingCartComponent() {
                                                 ))}
                                             </ul>
 
-                                            <button
-                                                type="submit"
-                                                className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+                                            <a
+                                                href={Routes.client.checkout}
+                                                className="block w-full rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 text-center"
                                             >
                                                 Apsipirkti
-                                            </button>
+                                            </a>
 
                                             <p className="mt-6 text-center">
-                                                <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                                                <a href={Routes.client.shoppingBag} className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
                                                     Peržiūrėti krepšelį
                                                 </a>
                                             </p>

@@ -12,11 +12,14 @@
   }
   ```
 */
+import { Routes as DomRoutes, Route } from "react-router-dom";
+import Routes from "../../routes/routes";
+
 const products = [
     {
         id: 1,
         name: 'MISOKO KALĖDINIS ŠUNŲ ŽAISLAS MEŠKINAS',
-        href: '#',
+        href: Routes.client.individualProduct,
         price: '15,99€',
         imageSrc: 'https://www.kika.lt/images/galleries/product_items/GIGWIMISG61011A1.JPG',
         imageAlt: 'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
@@ -24,7 +27,7 @@ const products = [
     {
         id: 2,
         name: 'LINO ŠUNŲ ANTKAKLIS, SU ODINIAIS ELEMENTAIS',
-        href: '#',
+        href: Routes.client.individualProduct,
         price: '21,99€',
         imageSrc: 'https://www.kika.lt/images/galleries/product_items/LINO32387.jpg',
         imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.',
@@ -32,7 +35,7 @@ const products = [
     {
         id: 3,
         name: 'TAURO PRO LINE NERŪDIJANČIO PLIENO KEIČIAMA GALVUTĖ',
-        href: '#',
+        href: Routes.client.individualProduct,
         price: '51,99€',
         imageSrc: 'https://www.kika.lt/images/galleries/product_items/TPL63629.jpg',
         imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
@@ -40,7 +43,7 @@ const products = [
     {
         id: 4,
         name: 'TAURO PRO LINE ŠUKOS',
-        href: '#',
+        href: Routes.client.individualProduct,
         price: '19,99€',
         imageSrc: 'https://www.kika.lt/images/galleries/product_items/TPLB63998.jpg',
         imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
