@@ -3,6 +3,7 @@ import { MagnifyingGlassIcon, ShoppingBagIcon } from '@heroicons/react/24/outlin
 import { Popover, Transition } from '@headlessui/react'
 import Routes from "../../routes/routes";
 
+
 const products = [
     {
         id: 1,
