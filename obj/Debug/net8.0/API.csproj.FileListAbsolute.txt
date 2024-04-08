@@ -33,3 +33,9 @@ C:\Users\auste\Desktop\KTU\3 kursas\PSA\API\obj\Debug\net8.0\refint\API.dll
 C:\Users\auste\Desktop\KTU\3 kursas\PSA\API\obj\Debug\net8.0\API.pdb
 C:\Users\auste\Desktop\KTU\3 kursas\PSA\API\obj\Debug\net8.0\API.genruntimeconfig.cache
 C:\Users\auste\Desktop\KTU\3 kursas\PSA\API\obj\Debug\net8.0\ref\API.dll
+C:\Users\auste\Desktop\KTU\3 kursas\PSA\API\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\auste\Desktop\KTU\3 kursas\PSA\API\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\auste\Desktop\KTU\3 kursas\PSA\API\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\auste\Desktop\KTU\3 kursas\PSA\API\bin\Debug\net8.0\MySqlConnector.dll
+C:\Users\auste\Desktop\KTU\3 kursas\PSA\API\bin\Debug\net8.0\Pomelo.EntityFrameworkCore.MySql.dll
+C:\Users\auste\Desktop\KTU\3 kursas\PSA\API\obj\Debug\net8.0\API.sourcelink.json

@@ -25,8 +25,7 @@ builder.Services.AddCors(options =>
 
 // Configure DbContext
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 // Add IHttpContextAccessor
 builder.Services.AddHttpContextAccessor();
@@ -47,7 +46,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowSpecificOrigin");
 
 app.UseHttpsRedirection();
+app.MapControllers();
 
-app.MapGet("/", () => "Hello World!");
 
 app.Run();
