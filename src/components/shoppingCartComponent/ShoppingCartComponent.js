@@ -1,29 +1,22 @@
-import { Fragment } from 'react'
-import { MagnifyingGlassIcon, ShoppingBagIcon } from '@heroicons/react/24/outline'
+import {  useState, useEffect, Fragment } from 'react'
+import {  ShoppingBagIcon } from '@heroicons/react/24/outline'
 import { Popover, Transition } from '@headlessui/react'
 import Routes from "../../routes/routes";
-
-
-const products = [
-    {
-        id: 1,
-        name: 'Misoko kalėdinis šunų žaislas meškinas',
-        href: '#',
-        imageSrc: 'https://www.kika.lt/images/galleries/product_items/GIGWIMISG61011A1.JPG',
-        imageAlt: 'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
-    },
-    {
-        id: 2,
-        name: 'Lino šunų antkaklis, su odiniais elementais',
-        href: '#',
-        imageSrc: 'https://www.kika.lt/images/galleries/product_items/LINO32387.jpg',
-        imageAlt:
-            'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
-    },
-    // More products...
-]
+import axios from 'axios';
 
 export default function ShoppingCartComponent() {
+    const [cartItems, setCartItems] = useState([]);
+
+    useEffect(() => {
+        // Fetch cart items from the API endpoint
+        axios.get('/api/Cart/GetCartItems')
+            .then(response => {
+                setCartItems(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching cart items:', error);
+            });
+    }, []);
     return (
         <header className="">
             <nav aria-label="Top" className="">
@@ -54,18 +47,16 @@ export default function ShoppingCartComponent() {
 
                                         <form className="mx-auto max-w-2xl px-4">
                                             <ul role="list" className="divide-y divide-gray-200">
-                                                {products.map((product) => (
-                                                    <li key={product.id} className="flex items-center py-6">
+                                                {cartItems.map((item) => (
+                                                    <li key={item.KrepselioNr} className="flex items-center py-6">
                                                         <img
-                                                            src={product.imageSrc}
-                                                            alt={product.imageAlt}
+                                                            src={item.PosterItem.Nuotrauka}
                                                             className="h-16 w-16 flex-none rounded-md border border-gray-200"
                                                         />
                                                         <div className="ml-4 flex-auto">
                                                             <h3 className="font-medium text-gray-900">
-                                                                <a href={product.href}>{product.name}</a>
+                                                                <a href={item.href}>{item.Pavadinimas}</a>
                                                             </h3>
-                                                            <p className="text-gray-500">{product.color}</p>
                                                         </div>
                                                     </li>
                                                 ))}
