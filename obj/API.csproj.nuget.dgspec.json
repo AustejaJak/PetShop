@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\API\\API.csproj": {}
+    "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\api\\API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\API\\API.csproj": {
+    "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\api\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\API\\API.csproj",
+        "projectUniqueName": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\api\\API.csproj",
         "projectName": "API",
-        "projectPath": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\API\\API.csproj",
+        "projectPath": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\api\\API.csproj",
         "packagesPath": "C:\\Users\\auste\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\API\\obj\\",
+        "outputPath": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\auste\\AppData\\Roaming\\NuGet\\NuGet.Config",

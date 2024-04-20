@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "4TtwcwgW/iQsGQ1RGHBUapywyX/AuJjpmcA7x22aSftMPn+FdJ0bcHibogq9egZVVE0ZGHp5Kz9AmGDJHJhgiQ==",
+  "dgSpecHash": "jrvmtX642Px7193aIo8t4faTWX1gJay8F17BkQzcePWpfT6jESxxbqOgybs46+Xarj/qkyQ1X6vPhXHLzyZryQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\API\\API.csproj",
+  "projectFilePath": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\api\\API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\auste\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.3\\microsoft.aspnetcore.openapi.8.0.3.nupkg.sha512",
     "C:\\Users\\auste\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.2\\microsoft.entityframeworkcore.8.0.2.nupkg.sha512",

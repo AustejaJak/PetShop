@@ -30,6 +30,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(
 // Add IHttpContextAccessor
 builder.Services.AddHttpContextAccessor();
 
+// Add controllers
+builder.Services.AddControllers();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -47,6 +50,5 @@ app.UseCors("AllowSpecificOrigin");
 
 app.UseHttpsRedirection();
 app.MapControllers();
-
 
 app.Run();
