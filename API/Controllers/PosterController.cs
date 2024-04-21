@@ -22,5 +22,18 @@ namespace API.Controllers
             var posters = _context.Posters.ToList();
             return Ok(posters);
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Poster>> GetPosterById(int id)
+        {
+            var poster = await _context.Posters.FindAsync(id);
+
+            if (poster == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(poster);
+        }
     }
 }

@@ -1,31 +1,58 @@
 import {  useState, useEffect, Fragment } from 'react'
 import {  ShoppingBagIcon } from '@heroicons/react/24/outline'
 import { Popover, Transition } from '@headlessui/react'
-import Routes from "../../routes/routes";
 import axios from 'axios';
 
-const products = [
-    {
-      id: 1,
-      name: 'Throwback Hip Bag',
-      href: '#',
-      color: 'Salmon',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
-      imageAlt: 'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
-    },
-    {
-      id: 2,
-      name: 'Medium Stuff Satchel',
-      href: '#',
-      color: 'Blue',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
-      imageAlt:
-        'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
-    },
-    // More products...
-  ]
-
 export default function ShoppingCartComponent() {
+    const [cartItems, setCartItems] = useState([]);
+
+    const fetchCartItems = async () => {
+      try {
+          const response = await axios.get('http://localhost:5088/api/Cart/GetCartItems');
+          const cartItemsWithDetails = await Promise.all(response.data.map(async (item) => {
+              // Fetch additional information about the poster
+              const posterResponse = await axios.get(`http://localhost:5088/api/Poster/${item.skelbimoNr}`);
+              const posterDetails = posterResponse.data;
+  
+              // Return the cart item with poster details
+              return {
+                  ...item,
+                  posterDetails: {
+                      pavadinimas: posterDetails.pavadinimas,
+                      nuotrauka: posterDetails.nuotrauka,
+                      gyvunuKategorija: posterDetails.gyvunuKategorija
+                  }
+              };
+          }));
+          setCartItems(cartItemsWithDetails);
+          console.log('Cart items with details:', cartItemsWithDetails);
+      } catch (error) {
+          console.error('Error fetching cart items:', error);
+      }
+  };
+  
+    // Fetch cart items when the component mounts
+    useEffect(() => {
+        fetchCartItems();
+    }, []);
+
+
+    var cartItemsDetails = cartItems.map((item) => (
+        <li key={item.krepselioSkelbimoNr} className="flex items-center py-6">
+        <img
+          src={item.posterDetails.nuotrauka}
+          alt="#"
+          className="h-16 w-16 flex-none rounded-md border border-gray-200"
+        />
+        <div className="ml-4 flex-auto">
+          <h3 className="font-medium text-gray-900">
+            <a href="#">{item.posterDetails.pavadinimas}</a>
+          </h3>
+          <p className="text-gray-500">{item.posterDetails.gyvunuKategorija}</p>
+        </div>
+      </li>
+    ));
+
     return (
         <header className="relative bg-white">
           <nav aria-label="Top" className="mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -40,7 +67,7 @@ export default function ShoppingCartComponent() {
                         className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                         aria-hidden="true"
                       />
-                      <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+                      <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{cartItems.length}</span>
                       <span className="sr-only">items in cart, view bag</span>
                     </Popover.Button>
                     <Transition
@@ -57,21 +84,7 @@ export default function ShoppingCartComponent() {
     
                         <form className="mx-auto max-w-2xl px-4">
                           <ul role="list" className="divide-y divide-gray-200">
-                            {products.map((product) => (
-                              <li key={product.id} className="flex items-center py-6">
-                                <img
-                                  src={product.imageSrc}
-                                  alt={product.imageAlt}
-                                  className="h-16 w-16 flex-none rounded-md border border-gray-200"
-                                />
-                                <div className="ml-4 flex-auto">
-                                  <h3 className="font-medium text-gray-900">
-                                    <a href={product.href}>{product.name}</a>
-                                  </h3>
-                                  <p className="text-gray-500">{product.color}</p>
-                                </div>
-                              </li>
-                            ))}
+                            {cartItemsDetails}
                           </ul>
     
                           <button

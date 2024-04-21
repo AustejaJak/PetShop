@@ -3,44 +3,18 @@ import Routes from "../../routes/routes";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-// const products = [
-//     {
-//         id: 1,
-//         name: 'MISOKO KALĖDINIS ŠUNŲ ŽAISLAS MEŠKINAS',
-//         href: Routes.client.individualProduct,
-//         price: '15,99€',
-//         imageSrc: 'https://www.kika.lt/images/galleries/product_items/GIGWIMISG61011A1.JPG',
-//         imageAlt: 'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
-//     },
-//     {
-//         id: 2,
-//         name: 'LINO ŠUNŲ ANTKAKLIS, SU ODINIAIS ELEMENTAIS',
-//         href: Routes.client.individualProduct,
-//         price: '21,99€',
-//         imageSrc: 'https://www.kika.lt/images/galleries/product_items/LINO32387.jpg',
-//         imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.',
-//     },
-//     {
-//         id: 3,
-//         name: 'TAURO PRO LINE NERŪDIJANČIO PLIENO KEIČIAMA GALVUTĖ',
-//         href: Routes.client.individualProduct,
-//         price: '51,99€',
-//         imageSrc: 'https://www.kika.lt/images/galleries/product_items/TPL63629.jpg',
-//         imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
-//     },
-//     {
-//         id: 4,
-//         name: 'TAURO PRO LINE ŠUKOS',
-//         href: Routes.client.individualProduct,
-//         price: '19,99€',
-//         imageSrc: 'https://www.kika.lt/images/galleries/product_items/TPLB63998.jpg',
-//         imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-//     },
-//     // More products...
-// ]
-
 export default function ProductListComponent() {
     const [posters, setPosters] = useState([]);
+    
+    
+    const addToCart = async (posterId) => {
+        try {
+            const response = await axios.post(`http://localhost:5088/api/Cart/AddToCart/${posterId}`);
+            console.log('Added to cart:', posterId);
+        } catch (error) {
+            console.error('Error adding to cart:', error);
+        }
+    };
 
     useEffect(() => {
         const fetchPosters = async () => {
@@ -66,7 +40,10 @@ export default function ProductListComponent() {
                 />
             </div>
             <h3 className="mt-4 text-sm text-gray-700">{poster.pavadinimas}</h3>
-            <p className="mt-1 text-lg font-medium text-gray-900">{poster.kaina}</p>
+            <p className="mt-1 text-lg font-medium text-gray-900">{poster.kaina} €</p>
+            <button onClick={() => addToCart(poster.skelbimoNr)} className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Pridėti į krepšelį
+            </button>
         </div>
     ));
     

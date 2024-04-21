@@ -5,6 +5,7 @@ import CategoryFilterComponent from "../../../components/categoryFilterComponent
 
 const ProductPage = () => {
     return (
+        
         <>
         <NavbarComponent />
             <CategoryFilterComponent />

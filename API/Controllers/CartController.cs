@@ -1,97 +1,86 @@
-using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using API.Data;
 using API.Entities;
 
 namespace API.Logic
 {
-  [ApiController]
-  [Route("api/[controller]")]
-  public class CartController : IDisposable
-  {
-    public string ShoppingCartId { get; set; } = null!;
-    private readonly ApplicationDbContext _db;
-    private readonly IHttpContextAccessor _httpContextAccessor;
-    public const string CartSessionKey = "CartId";
-
-    public CartController(DbContextOptions<ApplicationDbContext> options, IHttpContextAccessor httpContextAccessor)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class CartController : ControllerBase, IDisposable
     {
-      _db = new ApplicationDbContext(options);
-      _httpContextAccessor = httpContextAccessor; 
-    }
+        private readonly ApplicationDbContext _db;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public const string CartSessionKey = "CartId";
 
-    [HttpPost("AddToCart/{id}")]
-    public void AddToCart(int id)
-    {
-      ShoppingCartId = GetCartId();
-
-      var cartItem = _db.Carts.SingleOrDefault(c => c.KrepselioNr.ToString() == ShoppingCartId && c.SkelbimoNr == id);
-
-      if (cartItem == null)
-      {
-        // Create a new cart item if no cart item exists.  
-        var posterItem = _db.Posters.SingleOrDefault(p => p.SkelbimoNr == id);
-
-        cartItem = new Cart
+        public CartController(ApplicationDbContext dbContext, IHttpContextAccessor httpContextAccessor)
         {
-          SkelbimoNr = id,
-          KrepselioNr = Convert.ToInt32(ShoppingCartId),
-          PosterItem = posterItem!,
-          VartotojoNr = 1,
-          SesijosNr = 1,
-          ProduktuSuma = (posterItem?.Kaina ?? 0) * 1, // Assuming Kiekis is 1 initially
-        };
-
-        _db.Carts.Add(cartItem);
-      }
-      else
-      {
-        // If the item does exist in the cart,                  
-        // then add one to the quantity.                 
-        cartItem.Kiekis++;
-        cartItem.ProduktuSuma = (cartItem.PosterItem?.Kaina ?? 0) * cartItem.Kiekis;
-      }
-      _db.SaveChanges();
-    }
-
-    public void Dispose()
-    {
-      if (_db != null)
-      {
-        _db?.Dispose();
-      }
-    }
-    
-    [HttpGet("GetCartId")]
-    public string GetCartId()
-    {
-      var httpContext = _httpContextAccessor.HttpContext;
-      if (httpContext?.Session.GetString(CartSessionKey) == null)
-      {
-        if (!string.IsNullOrWhiteSpace(httpContext?.User.Identity.Name))
-        {
-          httpContext.Session.SetString(CartSessionKey, httpContext.User.Identity.Name);
+            _db = dbContext;
+            _httpContextAccessor = httpContextAccessor;
         }
-        else
+
+        [HttpPost("AddToCart/{id}")]
+        public IActionResult AddToCart(int id)
         {
-          // Generate a new random GUID using System.Guid class.     
-          Guid tempCartId = Guid.NewGuid();
-          httpContext?.Session.SetString(CartSessionKey, tempCartId.ToString());
+            var shoppingCartId = GetCartId();
+
+            var cartItem = _db.CartItems.FirstOrDefault(c => c.KrepselioNr == shoppingCartId && c.SkelbimoNr == id);
+            if (cartItem == null)
+            {
+                var poster = _db.Posters.FirstOrDefault(p => p.SkelbimoNr == id);
+                if (poster == null)
+                {
+                    return NotFound("Poster not found.");
+                }
+
+                cartItem = new CartItem
+                {
+                    KrepselioSkelbimoNr = Guid.NewGuid().ToString(),
+                    SkelbimoNr = id,
+                    KrepselioNr = shoppingCartId,
+                    Kiekis = 1,
+                    SukurimoData = DateTime.Now
+                };
+
+                _db.CartItems.Add(cartItem);
+            }
+            else
+            {
+                cartItem.Kiekis++;
+            }
+            _db.SaveChanges();
+
+            return Ok();
         }
-      }
-      else
-      {
-        throw new Exception("HttpContext is null");
-      }
-      return httpContext.Session.GetString(CartSessionKey);
-    }
 
-    [HttpGet("GetCartItems")]
-    public List<Cart> GetCartItems()
-    {
-      ShoppingCartId = GetCartId();
+        [HttpGet("GetCartItems")]
+        public ActionResult<List<CartItem>> GetCartItems()
+        {
+            var shoppingCartId = GetCartId();
 
-      return _db.Carts.Where(c => c.KrepselioNr.ToString() == ShoppingCartId).ToList();
+            var cartItems = _db.CartItems.Where(c => c.KrepselioNr == shoppingCartId).ToList();
+            return Ok(cartItems);
+        }
+
+        [HttpGet("GetcartId")]
+        private string GetCartId()
+        {
+            var sessionCartId = _httpContextAccessor.HttpContext.Session.GetString(CartSessionKey);
+            if (string.IsNullOrEmpty(sessionCartId))
+            {
+                sessionCartId = _httpContextAccessor.HttpContext.User.Identity?.Name ?? Guid.NewGuid().ToString();
+                _httpContextAccessor.HttpContext.Session.SetString(CartSessionKey, sessionCartId);
+            }
+            return sessionCartId;
+        }
+
+        public void Dispose()
+        {
+            _db.Dispose();
+        }
     }
-  }
 }
