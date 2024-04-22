@@ -5,8 +5,8 @@ import axios from 'axios';
 
 export default function ProductListComponent() {
     const [posters, setPosters] = useState([]);
-    
-    
+
+
     const addToCart = async (posterId) => {
         try {
             const response = await axios.post(`http://localhost:5088/api/Cart/AddToCart/${posterId}`);
@@ -41,7 +41,7 @@ export default function ProductListComponent() {
             </div>
             <h3 className="mt-4 text-sm text-gray-700">{poster.pavadinimas}</h3>
             <p className="mt-1 text-lg font-medium text-gray-900">{poster.kaina} €</p>
-            <button onClick={() => addToCart(poster.skelbimoNr)} className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <button onClick={() => addToCart(poster.skelbimoNr)} className="mt-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded">
                 Pridėti į krepšelį
             </button>
         </div>

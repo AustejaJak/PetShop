@@ -58,32 +58,32 @@ namespace API.Logic
         }
 
         [HttpPost("RemoveFromCart/{id}")]
-public IActionResult RemoveFromCart(int id)
-{
-    var shoppingCartId = GetCartId();
+        public IActionResult RemoveFromCart(int id)
+        {
+            var shoppingCartId = GetCartId();
 
-    // Find the cart item
-    var cartItem = _db.CartItems.FirstOrDefault(c => c.KrepselioNr == shoppingCartId && c.SkelbimoNr == id);
-    if (cartItem == null)
-    {
-        return NotFound("Cart item not found.");
-    }
+            // Find the cart item
+            var cartItem = _db.CartItems.FirstOrDefault(c => c.KrepselioNr == shoppingCartId && c.SkelbimoNr == id);
+            if (cartItem == null)
+            {
+                return NotFound("Cart item not found.");
+            }
 
-    // Decrease the quantity or remove the item
-    if (cartItem.Kiekis > 1)
-    {
-        cartItem.Kiekis--;
-    }
-    else
-    {
-        _db.CartItems.Remove(cartItem);
-    }
+            // Decrease the quantity or remove the item
+            if (cartItem.Kiekis > 1)
+            {
+                cartItem.Kiekis--;
+            }
+            else
+            {
+                _db.CartItems.Remove(cartItem);
+            }
 
-    // Save the changes to the database
-    _db.SaveChanges();
+            // Save the changes to the database
+            _db.SaveChanges();
 
-    return Ok();
-}
+            return Ok();
+        }
 
 
         [HttpGet("GetCartItems")]

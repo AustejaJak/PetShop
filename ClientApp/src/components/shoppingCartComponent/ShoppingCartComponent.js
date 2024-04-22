@@ -23,7 +23,10 @@ export default function ShoppingCartComponent() {
     };
 
     useEffect(() => {
-        fetchCartItems();
+        fetchCartItems(); // Fetch cart items initially
+        const interval = setInterval(fetchCartItems, 1000); // Fetch cart items every 5 seconds
+
+        return () => clearInterval(interval);
     }, []);
 
     const handleRemoveItem = async (itemId) => {
