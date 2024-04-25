@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.Data;
 using API.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Logic
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class CartController : ControllerBase, IDisposable
     {

@@ -1,8 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace API.Entities
 {
-    public class User
+    public class User : IdentityUser
     {
         [Key]
         public int VartotojoNr { get; set; }
@@ -13,7 +14,6 @@ namespace API.Entities
         public string ElPastas { get; set; } = null!;
         public DateTime? GimimoData { get; set; }
         public string Adresas { get; set; } = null!;
-        public string Role { get; set; } = null!;
 
     }
 }
