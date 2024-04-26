@@ -3,7 +3,7 @@ using AuthenticationApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AuthenticationApi.Controllers;
+namespace API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

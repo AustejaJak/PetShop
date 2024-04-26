@@ -114,24 +114,13 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Entities.User", b =>
                 {
-                    b.Property<int>("VartotojoNr")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("VartotojoNr"));
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("Adresas")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("ElPastas")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Email")
@@ -139,12 +128,6 @@ namespace API.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("tinyint(1)");
-
-                    b.Property<DateTime?>("GimimoData")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Id")
-                        .HasColumnType("longtext");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("tinyint(1)");
@@ -161,33 +144,13 @@ namespace API.Migrations
                     b.Property<string>("PasswordHash")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Pavarde")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("longtext");
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("PrisijungimoVardas")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Slaptazodis")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("TelefonoNr")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -196,7 +159,7 @@ namespace API.Migrations
                     b.Property<string>("UserName")
                         .HasColumnType("longtext");
 
-                    b.HasKey("VartotojoNr");
+                    b.HasKey("Id");
 
                     b.ToTable("Users");
                 });

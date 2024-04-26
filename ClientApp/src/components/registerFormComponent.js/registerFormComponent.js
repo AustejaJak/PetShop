@@ -1,41 +1,48 @@
 import Routes from "../../routes/routes";
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate  } from 'react-router-dom';
 
-export default function SignInFormComponent() {
+export default function RegisterFormComponent() {
     const navigate = useNavigate();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
+    const [formData, setFormData] = useState({
+        username: '',
+        email: '',
+        password: ''
+    });
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+    
         try {
-            const response = await fetch('http://localhost:5088/api/User/login', {
+            const response = await fetch('http://localhost:5088/api/User/register', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    email,
-                    password,
-                }),
+                body: JSON.stringify(formData)
             });
+    
             if (response.ok) {
-                // Extract token from response text
-                const token = await response.text();
-                // Store token in browser storage
-                localStorage.setItem('token', token);
-                // Redirect to a different page upon successful login
-                navigate(Routes.client.category);
+                const data = await response.text(); // Get response as text
+                // Handle successful registration message
+                console.log('Registration successful:', data);
+                navigate(Routes.client.login);
             } else {
-                // Handle authentication error
-                setError('Invalid credentials. Please try again.');
+                // Handle registration error
+                console.error('Registration failed:', response.statusText);
             }
         } catch (error) {
-            // Handle network or server errors
-            setError('An error occurred. Please try again later.');
+            console.error('Error during registration:', error);
         }
+    };
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
     };
 
     return (
@@ -48,12 +55,31 @@ export default function SignInFormComponent() {
                         alt="Your Company"
                     />
                     <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                        Prisijunkite į savo paskyrą
+                        Prisiregistruokite prie sistemos
                     </h2>
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form className="space-y-6" onSubmit={handleLogin}>
+                    <form className="space-y-6" onSubmit={handleSubmit}>
+                        
+                        <div>
+                            <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
+                                Prisijungimo vardas
+                            </label>
+                            <div className="mt-2">
+                                <input
+                                    id="username"
+                                    name="username"
+                                    type="username"
+                                    value={formData.username}
+                                    onChange={handleChange}
+                                    autoComplete="username"
+                                    required
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-3"
+                                />
+                            </div>
+                        </div>
+                        
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                                 Elektroninis paštas
@@ -63,10 +89,10 @@ export default function SignInFormComponent() {
                                     id="email"
                                     name="email"
                                     type="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
                                     autoComplete="email"
                                     required
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-3"
                                 />
                             </div>
@@ -77,45 +103,30 @@ export default function SignInFormComponent() {
                                 <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
                                     Slaptažodis
                                 </label>
-                                <div className="text-sm">
-                                    <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                                        Pamiršote slaptažodį?
-                                    </a>
-                                </div>
                             </div>
                             <div className="mt-2">
                                 <input
                                     id="password"
                                     name="password"
                                     type="password"
+                                    value={formData.password}
+                                    onChange={handleChange}
                                     autoComplete="current-password"
                                     required
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-3"
                                 />
                             </div>
                         </div>
-
 
                         <div>
                             <button
                                 type="submit"
                                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             >
-                                Prisijungti
+                                Prisiregistruoti
                             </button>
                         </div>
                     </form>
-
-                    <p className="mt-10 text-center text-sm text-gray-500">
-                        Dar esate neprisiregistravęs?{' '}
-                        <a href={Routes.client.register} className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-                            Prisiregistruokite čia
-                        </a>
-                    </p>
-
-                    {error && <p className="text-red-500 text-sm text-center mt-3">{error}</p>}
                 </div>
             </div>
         </>

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "EqIEHnt3uWeM0Gc7Jh+WFwJWVaCHF387qKZQUDIHBiMXslTqeIQoNxzty6lguzQWNJW+rOJKkJxXXN9G0S1pXQ==",
+  "dgSpecHash": "GFm8OgzeT2ci2xnTQWH6Cu1x7j3t1O+hVfIKI3c62DsmOF3egUpsnqbrTaNI59DV/0a1Ui+pFnsIHSL3bklh7w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\API\\API.csproj",
+  "projectFilePath": "D:\\petshop\\PetShop\\API\\API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\auste\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\auste\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\8.0.4\\microsoft.aspnetcore.authentication.jwtbearer.8.0.4.nupkg.sha512",

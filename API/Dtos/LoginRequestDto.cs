@@ -5,7 +5,7 @@ namespace API.Dtos;
 public class LoginRequest
 {
     [Required]
-    public string? PrisijungimoVardas { get; set; }
+    public string? Username { get; set; }
     [Required]
-    public string? Slaptazodis { get; set; }
+    public string? Password { get; set; }
 }

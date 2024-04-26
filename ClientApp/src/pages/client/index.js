@@ -2,6 +2,7 @@ import { Routes as DomRoutes, Route } from "react-router-dom";
 import Routes from "../../routes/routes";
 import HeroSectionComponent from "../../components/heroSectionComponent/heroSectionComponent";
 import SignInPage from "./signIn/SignIn";
+import RegisterPage from "./registerPage/registerPage";
 import ProductPage from "./productPage/productPage";
 import ProductOverviewPage from "./productOverviewPage/productOverviewPage";
 import ProfilePage from "./profilePage/profilePage";
@@ -29,6 +30,7 @@ const Client = () => {
       <DomRoutes>
         <Route path={Routes.client.base} element={<HeroSectionComponent /> } />
           <Route path={Routes.client.login} element={<SignInPage /> } />
+          <Route path={Routes.client.register} element={<RegisterPage /> } />
           <Route path={Routes.client.category} element={<ProductPage /> } />
           <Route path={Routes.client.individualProduct} element={<ProductOverviewPage /> } />
           <Route path={Routes.client.profile} element={<ProfilePage /> } />
