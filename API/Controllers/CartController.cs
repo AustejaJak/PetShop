@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Authorization;
 namespace API.Logic
 {
     [Route("api/[controller]")]
-    [Authorize]
     [ApiController]
     public class CartController : ControllerBase, IDisposable
     {

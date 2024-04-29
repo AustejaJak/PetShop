@@ -1,61 +1,135 @@
-/*
-  This example requires some changes to your config:
+import SelectMenuComponent from '../selectMenuComponent/selectMenuComponent';
+import React, { useState } from 'react';
+import axios from 'axios'; // Import Axios for making HTTP requests
+import { useNavigate  } from 'react-router-dom';
 
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 
 export default function FormLayoutComponent() {
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        ProduktoPavadinimas: '',
+        Kategorija: '',
+        Kiekis: '',
+        Tiekejas: ''
+    });
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            // Convert formData to JSON string
+            const formDataJson = JSON.stringify(formData);
+    
+            const response = await axios.post(
+                'http://localhost:5088/api/Wish',
+                formDataJson,
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            console.log('Wish added:', response.data);
+            navigate('/wishes');
+        } catch (error) {
+            console.error('Error adding wish:', error);
+        }
+    };
+    
+    
+
+    const handleChange = (event) => {
+        setFormData({
+            ...formData,
+            [event.target.name]: event.target.value
+        });
+    };
+
     return (
-        <form>
+        <form onSubmit={handleSubmit}>
             <div className="space-y-12 mx-80 my-20">
                 <div className="border-b border-gray-900/10 pb-12">
                     <h2 className="text-base font-semibold leading-7 text-gray-900">Pridėti norą</h2>
                     <p className="mt-1 text-sm leading-6 text-gray-600">
-                        This information will be displayed publicly so be careful what you share.
+                        Pridėti norimos prekės užklausą
                     </p>
 
                     <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                         <div className="sm:col-span-4">
-                            <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
-                                Username
+                            <label htmlFor="ProduktoPavadinimas" className="block text-sm font-medium leading-6 text-gray-900">
+                                Produkto pavadinimas
                             </label>
                             <div className="mt-2">
                                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                    <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">workcation.com/</span>
                                     <input
                                         type="text"
-                                        name="username"
-                                        id="username"
-                                        autoComplete="username"
+                                        name="ProduktoPavadinimas"
+                                        id="ProduktoPavadinimas"
+                                        value={formData.ProduktoPavadinimas}
+                                        onChange={handleChange}
+                                        autoComplete="ProduktoPavadinimas"
                                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        placeholder="janesmith"
+                                        placeholder="pavadinimas"
                                     />
                                 </div>
                             </div>
                         </div>
 
-                        <div className="col-span-full">
-                            <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
-                                About
+                        <div className="sm:col-span-4">
+                            <label htmlFor="Kategorija" className="block text-sm font-medium leading-6 text-gray-900">
+                                Produkto kategorija
                             </label>
                             <div className="mt-2">
-                <textarea
-                    id="about"
-                    name="about"
-                    rows={3}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    defaultValue={''}
-                />
+                                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                    <input
+                                        type="text"
+                                        name="Kategorija"
+                                        id="Kategorija"
+                                        value={formData.Kategorija}
+                                        onChange={handleChange}
+                                        autoComplete="Kategorija"
+                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        placeholder="kategorija"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="sm:col-span-4">
+                            <label htmlFor="Kiekis" className="block text-sm font-medium leading-6 text-gray-900">
+                                Kiekis
+                            </label>
+                            <div className="mt-2">
+                                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                    <input
+                                        type="text"
+                                        name="Kiekis"
+                                        id="Kiekis"
+                                        value={formData.Kiekis}
+                                        onChange={handleChange}
+                                        autoComplete="Kiekis"
+                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        placeholder="kiekis"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div className="sm:col-span-4">
+                            <label htmlFor="Tiekejas" className="block text-sm font-medium leading-6 text-gray-900">
+                                Tiekėjas
+                            </label>
+                            <div className="mt-2">
+                                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                    <input
+                                        type="text"
+                                        name="Tiekejas"
+                                        id="Tiekejas"
+                                        value={formData.Tiekejas}
+                                        onChange={handleChange}
+                                        autoComplete="Tiekejas"
+                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                        placeholder="tiekejas"
+                                    />
+                                </div>
                             </div>
                         </div>
 
@@ -65,12 +139,11 @@ export default function FormLayoutComponent() {
                 <div className="border-b border-gray-900/10 pb-12">
                     <h2 className="text-base font-semibold leading-7 text-gray-900">Kaip norite gauti pranešimą atsiradus prekei</h2>
                     <p className="mt-1 text-sm leading-6 text-gray-600">
-                        We'll always let you know about important changes, but you pick what else you want to hear about.
+                        Pasirinkite būdą, kaip norite gauti pranešimą atsiradus prekei
                     </p>
 
                     <div className="mt-10 space-y-10">
                         <fieldset>
-                            <legend className="text-sm font-semibold leading-6 text-gray-900">By Email</legend>
                             <div className="mt-6 space-y-6">
                                 <div className="relative flex gap-x-3">
                                     <div className="flex h-6 items-center">
@@ -83,9 +156,9 @@ export default function FormLayoutComponent() {
                                     </div>
                                     <div className="text-sm leading-6">
                                         <label htmlFor="comments" className="font-medium text-gray-900">
-                                            Comments
+                                            El. paštu
                                         </label>
-                                        <p className="text-gray-500">Get notified when someones posts a comment on a posting.</p>
+                                        <p className="text-gray-500">Atsiusime laiska i pasta kai preke atsiras</p>
                                     </div>
                                 </div>
                                 <div className="relative flex gap-x-3">
@@ -99,9 +172,9 @@ export default function FormLayoutComponent() {
                                     </div>
                                     <div className="text-sm leading-6">
                                         <label htmlFor="candidates" className="font-medium text-gray-900">
-                                            Candidates
+                                            Telefonu
                                         </label>
-                                        <p className="text-gray-500">Get notified when a candidate applies for a job.</p>
+                                        <p className="text-gray-500">Atsiusime sms zinute</p>
                                     </div>
                                 </div>
                                 <div className="relative flex gap-x-3">
@@ -115,49 +188,10 @@ export default function FormLayoutComponent() {
                                     </div>
                                     <div className="text-sm leading-6">
                                         <label htmlFor="offers" className="font-medium text-gray-900">
-                                            Offers
+                                            Svetaineje
                                         </label>
-                                        <p className="text-gray-500">Get notified when a candidate accepts or rejects an offer.</p>
+                                        <p className="text-gray-500">Atsidarius svetaineje ismesime pranesima</p>
                                     </div>
-                                </div>
-                            </div>
-                        </fieldset>
-                        <fieldset>
-                            <legend className="text-sm font-semibold leading-6 text-gray-900">Push Notifications</legend>
-                            <p className="mt-1 text-sm leading-6 text-gray-600">These are delivered via SMS to your mobile phone.</p>
-                            <div className="mt-6 space-y-6">
-                                <div className="flex items-center gap-x-3">
-                                    <input
-                                        id="push-everything"
-                                        name="push-notifications"
-                                        type="radio"
-                                        className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                                    />
-                                    <label htmlFor="push-everything" className="block text-sm font-medium leading-6 text-gray-900">
-                                        Everything
-                                    </label>
-                                </div>
-                                <div className="flex items-center gap-x-3">
-                                    <input
-                                        id="push-email"
-                                        name="push-notifications"
-                                        type="radio"
-                                        className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                                    />
-                                    <label htmlFor="push-email" className="block text-sm font-medium leading-6 text-gray-900">
-                                        Same as email
-                                    </label>
-                                </div>
-                                <div className="flex items-center gap-x-3">
-                                    <input
-                                        id="push-nothing"
-                                        name="push-notifications"
-                                        type="radio"
-                                        className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                                    />
-                                    <label htmlFor="push-nothing" className="block text-sm font-medium leading-6 text-gray-900">
-                                        No push notifications
-                                    </label>
                                 </div>
                             </div>
                         </fieldset>

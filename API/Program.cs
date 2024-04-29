@@ -19,7 +19,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(
 
 // 2. Identity
 builder.Services.AddIdentity<User, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddEntityFrameworkStores<ApplicationDbContext>() 
     .AddDefaultTokenProviders();
 
 // 3. Authentication
