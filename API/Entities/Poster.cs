@@ -8,7 +8,8 @@ namespace API.Entities
         public int SkelbimoNr { get; set; }
         public string GyvunuKategorija { get; set; } = null!;
         public string Pavadinimas { get; set; } = null!;
-        public float Kaina { get; set; }
+        public int Kiekis { get; set; }
+        public decimal Kaina { get; set; }
         public string Aprasas { get; set; } = null!; 
         public string Nuotrauka { get; set; } = null!; 
         public int Ivertinimas { get; set; }

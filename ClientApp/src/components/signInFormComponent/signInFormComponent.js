@@ -11,16 +11,21 @@ export default function SignInFormComponent() {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
+            const token = localStorage.getItem('token');
+            console.log(token);
             const response = await fetch('http://localhost:5088/api/User/login', {
                 method: 'POST',
                 headers: {
+                    'Access-Control-Allow-Origin': '*',
                     'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + token, 
                 },
                 body: JSON.stringify({
                     username,
                     password,
                 }),
             });
+            console.log(response);
             if (response.ok) {
                 // Extract token from response text
                 const token = await response.text();
@@ -36,7 +41,9 @@ export default function SignInFormComponent() {
             // Handle network or server errors
             setError('An error occurred. Please try again later.');
         }
+
     };
+
 
     return (
         <>

@@ -8,11 +8,16 @@ function classNames(...classes) {
 export default function WishesTableComponent() {
     const [wishes, setWishes] = useState([]);
 
+
     useEffect(() => {
         // Function to fetch wishes from the API
         const fetchWishes = async () => {
             try {
-                const response = await axios.get('http://localhost:5088/api/Wish');
+                const response = await axios.get('http://localhost:5088/api/Wish', {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
                 setWishes(response.data);
             } catch (error) {
                 console.error('Error fetching wishes:', error);

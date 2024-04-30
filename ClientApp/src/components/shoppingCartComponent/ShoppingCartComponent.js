@@ -8,9 +8,18 @@ export default function ShoppingCartComponent() {
 
     const fetchCartItems = async () => {
         try {
-            const response = await axios.get('http://localhost:5088/api/Cart/GetCartItems');
+            const token = localStorage.getItem('token'); // Retrieve token
+            const response = await axios.get('http://localhost:5088/api/Cart/GetCartItems', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
             const cartItemsWithDetails = await Promise.all(response.data.map(async (item) => {
-                const posterResponse = await axios.get(`http://localhost:5088/api/Poster/${item.skelbimoNr}`);
+                const posterResponse = await axios.get(`http://localhost:5088/api/Poster/${item.skelbimoNr}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
                 return {
                     ...item,
                     posterDetails: posterResponse.data
@@ -21,6 +30,7 @@ export default function ShoppingCartComponent() {
             console.error('Error fetching cart items:', error);
         }
     };
+    
 
     useEffect(() => {
         fetchCartItems(); // Fetch cart items initially
@@ -31,8 +41,13 @@ export default function ShoppingCartComponent() {
 
     const handleRemoveItem = async (itemId) => {
         try {
-            await axios.post(`http://localhost:5088/api/Cart/RemoveFromCart/${itemId}`);
-            fetchCartItems();  // Re-fetch cart items after removing
+            const token = localStorage.getItem('token'); // Retrieve token
+            await axios.post(`http://localhost:5088/api/Cart/RemoveFromCart/${itemId}`, null, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            fetchCartItems(); // Re-fetch cart items after removing
         } catch (error) {
             console.error('Error removing item from cart:', error);
         }

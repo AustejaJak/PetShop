@@ -9,7 +9,12 @@ export default function ProductListComponent() {
 
     const addToCart = async (posterId) => {
         try {
-            const response = await axios.post(`http://localhost:5088/api/Cart/AddToCart/${posterId}`);
+            const token = localStorage.getItem('token'); // Retrieve token
+            const response = await axios.post(`http://localhost:5088/api/Cart/AddToCart/${posterId}`, null, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
             console.log('Added to cart:', posterId);
         } catch (error) {
             console.error('Error adding to cart:', error);
@@ -19,14 +24,18 @@ export default function ProductListComponent() {
     useEffect(() => {
         const fetchPosters = async () => {
             try {
-                const response = await axios.get('http://localhost:5088/api/Poster');
+                const response = await axios.get('http://localhost:5088/api/Poster', {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
                 console.log('Posters:', response.data);
                 setPosters(response.data);
             } catch (error) {
                 console.error('Error fetching posters:', error);
             }
         };
-
+    
         fetchPosters();
     }, []);
 
@@ -46,7 +55,7 @@ export default function ProductListComponent() {
             </button>
         </div>
     ));
-    
+
 
 
     return (
