@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace API.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class PosterController : ControllerBase
     {
