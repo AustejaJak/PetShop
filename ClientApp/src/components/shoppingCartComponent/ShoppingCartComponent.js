@@ -70,7 +70,7 @@ export default function ShoppingCartComponent() {
                     >
                         <MinusIcon className="h-5 w-5" aria-hidden="true" />
                     </button>
-                    <span className="ml-2 text-sm text-gray-700">Quantity: {item.kiekis}</span>
+                    <span className="ml-2 text-sm text-gray-700">Kiekis: {item.kiekis}</span>
                 </div>
             </div>
         </li>

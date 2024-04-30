@@ -13,7 +13,7 @@ namespace API.Logic
     [Route("api/[controller]")]
     [Authorize]
     [ApiController]
-    public class CartController : ControllerBase, IDisposable
+    public class CartController : ControllerBase
     {
         private readonly ApplicationDbContext _db;
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -37,6 +37,10 @@ namespace API.Logic
                 if (poster == null)
                 {
                     return NotFound("Poster not found.");
+                }
+                else if (poster.Kiekis == 0)
+                {
+                    return BadRequest("Poster is out of stock.");
                 }
 
                 cartItem = new CartItem
@@ -109,9 +113,5 @@ namespace API.Logic
             return sessionCartId;
         }
 
-        public void Dispose()
-        {
-            _db.Dispose();
-        }
     }
 }
