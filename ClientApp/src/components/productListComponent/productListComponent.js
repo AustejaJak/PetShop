@@ -33,22 +33,9 @@ export default function ProductListComponent() {
                 }
             });
             console.log('Added to cart:', posterId);
+            fetchPosters(); // Re-fetch posters after adding to cart
         } catch (error) {
             console.error('Error adding to cart:', error);
-        }
-    };
-
-    const handleRemoveItem = async (posterId) => {
-        try {
-            const token = localStorage.getItem('token'); // Retrieve token
-            await axios.post(`http://localhost:5088/api/Poster/RemoveQuantity/${posterId}`, null, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-            fetchPosters(); // Fetch posters after removing quantity
-        } catch (error) {
-            console.error('Error removing quantity:', error);
         }
     };
 
@@ -64,7 +51,7 @@ export default function ProductListComponent() {
             <h3 className="mt-4 text-sm text-gray-700">{poster.pavadinimas}</h3>
             <h3 className="mt-4 text-sm text-gray-700">Kiekis: {poster.kiekis}</h3>
             <p className="mt-1 text-lg font-medium text-gray-900">{poster.kaina} €</p>
-            <button onClick={() => {addToCart(poster.skelbimoNr); handleRemoveItem(poster.skelbimoNr)}} className="mt-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded">
+            <button onClick={() => addToCart(poster.skelbimoNr)} className="mt-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded">
                 Pridėti į krepšelį
             </button>
         </div>

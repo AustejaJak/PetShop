@@ -38,28 +38,5 @@ namespace API.Controllers
             return Ok(poster);
         }
 
-        [HttpPost("RemoveQuantity/{id}")]
-        public IActionResult RemoveQuantity(int id)
-        {
-            var poster = _context.Posters.FirstOrDefault(p => p.SkelbimoNr == id);
-            
-            if (poster == null)
-            {
-                return NotFound("Skelbimų nėra.");
-            }
-
-            if (poster.Kiekis > 0)
-            {
-                poster.Kiekis--;
-            }
-            else
-            {
-                return BadRequest("Skelbimo nėra.");
-            }
-
-            _context.SaveChanges();
-
-            return Ok();
-        }
     }
 }

@@ -31,17 +31,21 @@ namespace API.Logic
             var shoppingCartId = GetCartId();
 
             var cartItem = _db.CartItems.FirstOrDefault(c => c.KrepselioNr == shoppingCartId && c.SkelbimoNr == id);
+            var poster = _db.Posters.FirstOrDefault(p => p.SkelbimoNr == id);
+
+            if (poster == null)
+            {
+                return NotFound("Poster not found.");
+            }
+
             if (cartItem == null)
             {
-                var poster = _db.Posters.FirstOrDefault(p => p.SkelbimoNr == id);
-                if (poster == null)
-                {
-                    return NotFound("Poster not found.");
-                }
-                else if (poster.Kiekis == 0)
+                if (poster.Kiekis == 0)
                 {
                     return BadRequest("Poster is out of stock.");
                 }
+
+                poster.Kiekis--;
 
                 cartItem = new CartItem
                 {
@@ -51,17 +55,26 @@ namespace API.Logic
                     Kiekis = 1,
                     SukurimoData = DateTime.Now
                 };
-
                 _db.CartItems.Add(cartItem);
             }
             else
             {
+                if (poster.Kiekis == 0)
+                {
+                    return BadRequest("Adding one more item exceeds available stock for this poster.");
+                }
+                else if (poster.Kiekis > 0) // Only decrement if stock is greater than 0
+                {
+                    poster.Kiekis--; // Decrease the stock of the poster
+                }
                 cartItem.Kiekis++;
             }
+
             _db.SaveChanges();
 
             return Ok();
         }
+
 
         [HttpPost("RemoveFromCart/{id}")]
         public IActionResult RemoveFromCart(int id)
@@ -70,6 +83,7 @@ namespace API.Logic
 
             // Find the cart item
             var cartItem = _db.CartItems.FirstOrDefault(c => c.KrepselioNr == shoppingCartId && c.SkelbimoNr == id);
+            var poster = _db.Posters.FirstOrDefault(p => p.SkelbimoNr == id);
             if (cartItem == null)
             {
                 return NotFound("Cart item not found.");
@@ -84,6 +98,8 @@ namespace API.Logic
             {
                 _db.CartItems.Remove(cartItem);
             }
+
+            poster.Kiekis++; // Increase the stock of the poster
 
             // Save the changes to the database
             _db.SaveChanges();
