@@ -2,6 +2,7 @@ import { useState, useEffect, Fragment } from 'react';
 import { ShoppingBagIcon, MinusIcon } from '@heroicons/react/24/outline';
 import { Popover, Transition } from '@headlessui/react';
 import axios from 'axios';
+import Routes from "../../routes/routes";
 
 export default function ShoppingCartComponent() {
     const [cartItems, setCartItems] = useState([]);
@@ -98,7 +99,7 @@ export default function ShoppingCartComponent() {
                                             Checkout
                                         </button>
                                         <p className="mt-6 text-center">
-                                            <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">View Shopping Bag</a>
+                                            <a href={Routes.client.shoppingBag} className="text-sm font-medium text-indigo-600 hover:text-indigo-500">View Shopping Bag</a>
                                         </p>
                                     </form>
                                 </Popover.Panel>

@@ -1,33 +1,79 @@
 import { CheckIcon, ClockIcon } from '@heroicons/react/20/solid'
 import Routes from "../../routes/routes";
-const products = [
-    {
-        id: 1,
-        name: 'Artwork Tee',
-        href: '#',
-        price: '$32.00',
-        color: 'Mint',
-        size: 'Medium',
-        inStock: true,
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/checkout-page-03-product-04.jpg',
-        imageAlt: 'Front side of mint cotton t-shirt with wavey lines pattern.',
-    },
-    {
-        id: 2,
-        name: 'Basic Tee',
-        href: '#',
-        price: '$32.00',
-        color: 'Charcoal',
-        inStock: false,
-        leadTime: '7-8 years',
-        size: 'Large',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-02.jpg',
-        imageAlt: 'Front side of charcoal cotton t-shirt.',
-    },
-    // More products...
-]
+import axios from 'axios';
+import { useState, useEffect, Fragment } from 'react';
+
 
 export default function CheckoutComponent() {
+    const [cartItems, setCartItems] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0); 
+
+    const fetchCartItems = async () => {
+        try {
+            const token = localStorage.getItem('token'); // Retrieve token
+            const response = await axios.get('http://localhost:5088/api/Cart/GetCartItems', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const cartItemsWithDetails = await Promise.all(response.data.map(async (item) => {
+                const posterResponse = await axios.get(`http://localhost:5088/api/Poster/${item.skelbimoNr}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                return {
+                    ...item,
+                    posterDetails: posterResponse.data
+                };
+            }));
+            setCartItems(cartItemsWithDetails);
+        } catch (error) {
+            console.error('Error fetching cart items:', error);
+        }
+    };
+
+    useEffect(() => {
+        // Calculate total price
+        const sum = cartItems.reduce((acc, item) => acc + item.posterDetails.kaina * item.kiekis, 0);
+        setTotalPrice(sum);
+    }, [cartItems]);
+
+    useEffect(() => {
+        fetchCartItems(); // Fetch cart items initially
+    }, []);
+
+    const checkoutDetails = cartItems.map((item) => (
+        <li key={item.krepselioSkelbimoNr} className="flex py-6">
+        <div className="flex-shrink-0">
+            <img
+                src={item.posterDetails.nuotrauka}
+                alt="#"
+                className="h-24 w-24 rounded-md object-cover object-center sm:h-32 sm:w-32"
+            />
+        </div>
+
+        <div className="ml-4 flex flex-1 flex-col sm:ml-6">
+            <div>
+                <div className="flex justify-between">
+                    <h4 className="text-sm">
+                        <a href="#" className="font-medium text-gray-700 hover:text-gray-800">
+                            {item.posterDetails.pavadinimas}
+                        </a>
+                    </h4>
+                    <p className="ml-4 text-sm font-medium text-gray-900">{item.posterDetails.kaina} €</p>
+                </div>
+                <p className="mt-1 text-sm text-gray-500">Gyvūno kategorija: {item.posterDetails.gyvunuKategorija}</p>
+                <p className="mt-1 text-sm text-gray-500">Kiekis: {item.kiekis}</p>
+            </div>
+
+            <div className="mt-4 flex flex-1 items-end justify-between">
+                <div className="ml-4">
+                </div>
+            </div>
+        </div>
+    </li>
+    ));
     return (
         <div className="bg-white">
             <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:px-0">
@@ -40,49 +86,7 @@ export default function CheckoutComponent() {
                         </h2>
 
                         <ul role="list" className="divide-y divide-gray-200 border-b border-t border-gray-200">
-                            {products.map((product) => (
-                                <li key={product.id} className="flex py-6">
-                                    <div className="flex-shrink-0">
-                                        <img
-                                            src={product.imageSrc}
-                                            alt={product.imageAlt}
-                                            className="h-24 w-24 rounded-md object-cover object-center sm:h-32 sm:w-32"
-                                        />
-                                    </div>
-
-                                    <div className="ml-4 flex flex-1 flex-col sm:ml-6">
-                                        <div>
-                                            <div className="flex justify-between">
-                                                <h4 className="text-sm">
-                                                    <a href={product.href} className="font-medium text-gray-700 hover:text-gray-800">
-                                                        {product.name}
-                                                    </a>
-                                                </h4>
-                                                <p className="ml-4 text-sm font-medium text-gray-900">{product.price}</p>
-                                            </div>
-                                            <p className="mt-1 text-sm text-gray-500">{product.color}</p>
-                                            <p className="mt-1 text-sm text-gray-500">{product.size}</p>
-                                        </div>
-
-                                        <div className="mt-4 flex flex-1 items-end justify-between">
-                                            <p className="flex items-center space-x-2 text-sm text-gray-700">
-                                                {product.inStock ? (
-                                                    <CheckIcon className="h-5 w-5 flex-shrink-0 text-green-500" aria-hidden="true" />
-                                                ) : (
-                                                    <ClockIcon className="h-5 w-5 flex-shrink-0 text-gray-300" aria-hidden="true" />
-                                                )}
-
-                                                <span>{product.inStock ? 'In stock' : `Will ship in ${product.leadTime}`}</span>
-                                            </p>
-                                            <div className="ml-4">
-                                                <button type="button" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                                                    <span>Ištrinti</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            ))}
+                            {checkoutDetails}
                         </ul>
                     </section>
 
@@ -96,7 +100,7 @@ export default function CheckoutComponent() {
                             <dl className="space-y-4">
                                 <div className="flex items-center justify-between">
                                     <dt className="text-base font-medium text-gray-900">Iš viso</dt>
-                                    <dd className="ml-4 text-base font-medium text-gray-900">96.00€</dd>
+                                    <dd className="ml-4 text-base font-medium text-gray-900">{totalPrice.toFixed(2)} €</dd>
                                 </div>
                             </dl>
                             <p className="mt-1 text-sm text-gray-500">Atsiuntimas bus priskaičiuotas perkant prekes</p>
