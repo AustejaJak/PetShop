@@ -1,38 +1,63 @@
-/*
-  This example requires some changes to your config:
-
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
-import { Fragment } from 'react'
+import { useState, useEffect, Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import { ChevronUpIcon } from '@heroicons/react/20/solid'
 import Routes from "../../routes/routes";
+import axios from 'axios';
 
-const products = [
-    {
-        id: 1,
-        name: 'Micro Backpack',
-        href: '#',
-        price: '$70.00',
-        color: 'Moss',
-        size: '5L',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/checkout-page-04-product-01.jpg',
-        imageAlt:
-            'Moss green canvas compact backpack with double top zipper, zipper front pouch, and matching carry handle and backpack straps.',
-    },
-    // More products...
-]
 
 export default function CheckoutFormComponent() {
+    const [cartItems, setCartItems] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0); 
+    const fetchCartItems = async () => {
+        try {
+            const token = localStorage.getItem('token'); // Retrieve token
+            const response = await axios.get('http://localhost:5088/api/Cart/GetCartItems', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const cartItemsWithDetails = await Promise.all(response.data.map(async (item) => {
+                const posterResponse = await axios.get(`http://localhost:5088/api/Poster/${item.skelbimoNr}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                return {
+                    ...item,
+                    posterDetails: posterResponse.data
+                };
+            }));
+            setCartItems(cartItemsWithDetails);
+        } catch (error) {
+            console.error('Error fetching cart items:', error);
+        }
+    };
+    useEffect(() => {
+        fetchCartItems();
+    }, []);
+    
+    const cartItemsDetails = cartItems.map((item) => (
+            <li key={item.krepselioSkelbimoNr} className="flex items-start space-x-4 py-6">
+                <img
+                    src={item.posterDetails.nuotrauka}
+                    alt="#"
+                    className="h-20 w-20 flex-none rounded-md object-cover object-center"
+                />
+                <div className="flex-auto space-y-1">
+                    <h3>{item.posterDetails.pavadinimas}</h3>
+                    <p className="text-gray-500">Gyyvunu kategorija: {item.posterDetails.gyvunuKategorija}</p>
+                    <p className="text-gray-500">Kiekis: {item.kiekis}</p>
+                </div>
+                <p className="flex-none text-base font-medium">{item.posterDetails.kaina} €</p>
+            </li>
+    ));
+
+    useEffect(() => {
+        // Calculate total price
+        const sum = cartItems.reduce((acc, item) => acc + item.posterDetails.kaina * item.kiekis, 0);
+        setTotalPrice(sum);
+    }, [cartItems]);
+
     return (
         <div className="bg-white">
             {/* Background color split screen for large screens */}
@@ -40,7 +65,7 @@ export default function CheckoutFormComponent() {
             <div className="fixed right-0 top-0 hidden h-full w-1/2 bg-gray-50 lg:block" aria-hidden="true" />
 
             <div className="relative mx-auto grid max-w-7xl grid-cols-1 gap-x-16 lg:grid-cols-2 lg:px-8 xl:gap-x-48">
-                <h1 className="sr-only">Order information</h1>
+                <h1 className="sr-only">Užsakymo informacija</h1>
 
                 <section
                     aria-labelledby="summary-heading"
@@ -48,46 +73,27 @@ export default function CheckoutFormComponent() {
                 >
                     <div className="mx-auto max-w-lg lg:max-w-none">
                         <h2 id="summary-heading" className="text-lg font-medium text-gray-900">
-                            Order summary
+                            Užsakymo apibendrinimas
                         </h2>
 
                         <ul role="list" className="divide-y divide-gray-200 text-sm font-medium text-gray-900">
-                            {products.map((product) => (
-                                <li key={product.id} className="flex items-start space-x-4 py-6">
-                                    <img
-                                        src={product.imageSrc}
-                                        alt={product.imageAlt}
-                                        className="h-20 w-20 flex-none rounded-md object-cover object-center"
-                                    />
-                                    <div className="flex-auto space-y-1">
-                                        <h3>{product.name}</h3>
-                                        <p className="text-gray-500">{product.color}</p>
-                                        <p className="text-gray-500">{product.size}</p>
-                                    </div>
-                                    <p className="flex-none text-base font-medium">{product.price}</p>
-                                </li>
-                            ))}
+                            {cartItemsDetails}
                         </ul>
 
                         <dl className="hidden space-y-6 border-t border-gray-200 pt-6 text-sm font-medium text-gray-900 lg:block">
                             <div className="flex items-center justify-between">
-                                <dt className="text-gray-600">Subtotal</dt>
-                                <dd>$320.00</dd>
+                                <dt className="text-gray-600">Pradinė kaina</dt>
+                                <dd>{totalPrice.toFixed(2)} €</dd>
                             </div>
 
                             <div className="flex items-center justify-between">
-                                <dt className="text-gray-600">Shipping</dt>
-                                <dd>$15.00</dd>
-                            </div>
-
-                            <div className="flex items-center justify-between">
-                                <dt className="text-gray-600">Taxes</dt>
-                                <dd>$26.80</dd>
+                                <dt className="text-gray-600">Atsiuntimo kaina</dt>
+                                <dd>3.00 €</dd>
                             </div>
 
                             <div className="flex items-center justify-between border-t border-gray-200 pt-6">
-                                <dt className="text-base">Total</dt>
-                                <dd className="text-base">$361.80</dd>
+                                <dt className="text-base">Iš viso</dt>
+                                <dd className="text-base">{(totalPrice + 3.00).toFixed(2)} €</dd>
                             </div>
                         </dl>
 
@@ -95,8 +101,8 @@ export default function CheckoutFormComponent() {
                             <div className="relative z-10 border-t border-gray-200 bg-white px-4 sm:px-6">
                                 <div className="mx-auto max-w-lg">
                                     <Popover.Button className="flex w-full items-center py-6 font-medium">
-                                        <span className="mr-auto text-base">Total</span>
-                                        <span className="mr-2 text-base">$361.80</span>
+                                        <span className="mr-auto text-base">Iš viso</span>
+                                        <span className="mr-2 text-base">{(totalPrice + 3.00).toFixed(2)}</span>
                                         <ChevronUpIcon className="h-5 w-5 text-gray-500" aria-hidden="true" />
                                     </Popover.Button>
                                 </div>
@@ -154,116 +160,20 @@ export default function CheckoutFormComponent() {
                     <div className="mx-auto max-w-lg lg:max-w-none">
                         <section aria-labelledby="contact-info-heading">
                             <h2 id="contact-info-heading" className="text-lg font-medium text-gray-900">
-                                Contact information
+                                Kontaktinė informacija
                             </h2>
-
-                            <div className="mt-6">
-                                <label htmlFor="email-address" className="block text-sm font-medium text-gray-700">
-                                    Email address
-                                </label>
-                                <div className="mt-1">
-                                    <input
-                                        type="email"
-                                        id="email-address"
-                                        name="email-address"
-                                        autoComplete="email"
-                                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                    />
-                                </div>
-                            </div>
-                        </section>
-
-                        <section aria-labelledby="payment-heading" className="mt-10">
-                            <h2 id="payment-heading" className="text-lg font-medium text-gray-900">
-                                Payment details
-                            </h2>
-
-                            <div className="mt-6 grid grid-cols-3 gap-x-4 gap-y-6 sm:grid-cols-4">
-                                <div className="col-span-3 sm:col-span-4">
-                                    <label htmlFor="name-on-card" className="block text-sm font-medium text-gray-700">
-                                        Name on card
-                                    </label>
-                                    <div className="mt-1">
-                                        <input
-                                            type="text"
-                                            id="name-on-card"
-                                            name="name-on-card"
-                                            autoComplete="cc-name"
-                                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="col-span-3 sm:col-span-4">
-                                    <label htmlFor="card-number" className="block text-sm font-medium text-gray-700">
-                                        Card number
-                                    </label>
-                                    <div className="mt-1">
-                                        <input
-                                            type="text"
-                                            id="card-number"
-                                            name="card-number"
-                                            autoComplete="cc-number"
-                                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="col-span-2 sm:col-span-3">
-                                    <label htmlFor="expiration-date" className="block text-sm font-medium text-gray-700">
-                                        Expiration date (MM/YY)
-                                    </label>
-                                    <div className="mt-1">
-                                        <input
-                                            type="text"
-                                            name="expiration-date"
-                                            id="expiration-date"
-                                            autoComplete="cc-exp"
-                                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label htmlFor="cvc" className="block text-sm font-medium text-gray-700">
-                                        CVC
-                                    </label>
-                                    <div className="mt-1">
-                                        <input
-                                            type="text"
-                                            name="cvc"
-                                            id="cvc"
-                                            autoComplete="csc"
-                                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
                         </section>
 
                         <section aria-labelledby="shipping-heading" className="mt-10">
                             <h2 id="shipping-heading" className="text-lg font-medium text-gray-900">
-                                Shipping address
+                                Atsiuntimo informacija
                             </h2>
 
                             <div className="mt-6 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-3">
-                                <div className="sm:col-span-3">
-                                    <label htmlFor="company" className="block text-sm font-medium text-gray-700">
-                                        Company
-                                    </label>
-                                    <div className="mt-1">
-                                        <input
-                                            type="text"
-                                            id="company"
-                                            name="company"
-                                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                        />
-                                    </div>
-                                </div>
 
                                 <div className="sm:col-span-3">
                                     <label htmlFor="address" className="block text-sm font-medium text-gray-700">
-                                        Address
+                                        Adresas
                                     </label>
                                     <div className="mt-1">
                                         <input
@@ -278,7 +188,7 @@ export default function CheckoutFormComponent() {
 
                                 <div className="sm:col-span-3">
                                     <label htmlFor="apartment" className="block text-sm font-medium text-gray-700">
-                                        Apartment, suite, etc.
+                                        Apartamentai, kambario numeris.
                                     </label>
                                     <div className="mt-1">
                                         <input
@@ -292,7 +202,7 @@ export default function CheckoutFormComponent() {
 
                                 <div>
                                     <label htmlFor="city" className="block text-sm font-medium text-gray-700">
-                                        City
+                                        Miestas
                                     </label>
                                     <div className="mt-1">
                                         <input
@@ -307,7 +217,7 @@ export default function CheckoutFormComponent() {
 
                                 <div>
                                     <label htmlFor="region" className="block text-sm font-medium text-gray-700">
-                                        State / Province
+                                        Rajonas
                                     </label>
                                     <div className="mt-1">
                                         <input
@@ -322,7 +232,7 @@ export default function CheckoutFormComponent() {
 
                                 <div>
                                     <label htmlFor="postal-code" className="block text-sm font-medium text-gray-700">
-                                        Postal code
+                                        Pašto kodas
                                     </label>
                                     <div className="mt-1">
                                         <input
@@ -337,36 +247,16 @@ export default function CheckoutFormComponent() {
                             </div>
                         </section>
 
-                        <section aria-labelledby="billing-heading" className="mt-10">
-                            <h2 id="billing-heading" className="text-lg font-medium text-gray-900">
-                                Billing information
-                            </h2>
-
-                            <div className="mt-6 flex items-center">
-                                <input
-                                    id="same-as-shipping"
-                                    name="same-as-shipping"
-                                    type="checkbox"
-                                    defaultChecked
-                                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                />
-                                <div className="ml-2">
-                                    <label htmlFor="same-as-shipping" className="text-sm font-medium text-gray-900">
-                                        Same as shipping information
-                                    </label>
-                                </div>
-                            </div>
-                        </section>
 
                         <div className="mt-10 border-t border-gray-200 pt-6 sm:flex sm:items-center sm:justify-between">
                             <a
                                 href={Routes.client.base}
                                 className="block w-full rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:order-last sm:ml-6 sm:w-auto text-center"
                             >
-                                Continue
+                                Apmokėti
                             </a>
                             <p className="mt-4 text-center text-sm text-gray-500 sm:mt-0 sm:text-left">
-                                You won't be charged until the next step.
+                                Jūs būsite apmokestinti kitame žingsnyje
                             </p>
                         </div>
                     </div>
