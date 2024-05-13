@@ -1,39 +1,19 @@
-import { Routes as DomRoutes, Route } from "react-router-dom";
-import Routes from "../../routes/routes";
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import axios from 'axios';
 
-export default function ProductListComponent() {
-    const [posters, setPosters] = useState([]);
-
-    const fetchPosters = async () => {
-        try {
-            const response = await axios.get('http://localhost:5088/api/Poster', {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
-                }
-            });
-            console.log('Posters:', response.data);
-            setPosters(response.data);
-        } catch (error) {
-            console.error('Error fetching posters:', error);
-        }
-    };
-
-    useEffect(() => {
-        fetchPosters();
-    }, []);
+export default function ProductListComponent(props) {
+    const { posters, fetchPosters } = props;
 
     const addToCart = async (posterId) => {
         try {
             const token = localStorage.getItem('token'); // Retrieve token
-            const response = await axios.post(`http://localhost:5088/api/Cart/AddToCart/${posterId}`, null, {
+            await axios.post(`http://localhost:5088/api/Cart/AddToCart/${posterId}`, null, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
             console.log('Added to cart:', posterId);
-            fetchPosters(); // Re-fetch posters after adding to cart
+            window.location.reload(); // Re-fetch posters after adding to cart
         } catch (error) {
             console.error('Error adding to cart:', error);
         }
@@ -59,13 +39,10 @@ export default function ProductListComponent() {
         </div>
     ));
 
-
-
     return (
         <div className="bg-white">
             <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
                 <h2 className="sr-only">Posters</h2>
-
                 <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
                     {posterDetails}
                 </div>
