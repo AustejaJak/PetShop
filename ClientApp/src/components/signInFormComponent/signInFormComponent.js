@@ -11,39 +11,59 @@ export default function SignInFormComponent() {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const token = localStorage.getItem('token');
-            console.log(token);
-            const response = await fetch('http://localhost:5088/api/User/login', {
+            const accessTokenString = localStorage.getItem('token');
+            const accessToken = JSON.parse(accessTokenString).token;
+            const loginResponse = await fetch('http://localhost:5088/api/Authenticate/login', {
                 method: 'POST',
                 headers: {
                     'Access-Control-Allow-Origin': '*',
                     'Content-Type': 'application/json',
-                    Authorization: 'Bearer ' + token, 
+                    Authorization: 'Bearer ' + accessToken,
                 },
                 body: JSON.stringify({
                     username,
                     password,
                 }),
             });
-            console.log(response);
-            if (response.ok) {
-                // Extract token from response text
-                const token = await response.text();
-                // Store token in browser storage
-                localStorage.setItem('token', token);
-                // Redirect to a different page upon successful login
+
+            // if (loginResponse.status === 401) {
+            //     const token = localStorage.getItem('token');
+                //     console.log(token);
+                //     const refreshResponse = await fetch('http://localhost:5088/api/Authenticate/refresh-token', {
+                //         method: 'POST',
+                //         headers: {
+                //             'Access-Control-Allow-Origin': '*',
+                //             'Content-Type': 'application/json',
+                //             Authorization: 'Bearer ' + token,
+                //         },
+                //         body: JSON.stringify({
+                //             username,
+                //             password,
+                //         }),
+                //     });
+                //     console.log(refreshResponse);
+                //     if (refreshResponse.ok) {
+                //         const token = await refreshResponse.text();
+                //         localStorage.setItem('token', token);
+                //         handleLogin(e);
+                //     } else {
+                //         setError('Token expired.');
+                //     }
+            
+            // }else 
+                if (loginResponse.ok) {
+                const token = await loginResponse.text();
+                const localStorageToken = JSON.parse(token).token;
+                localStorage.setItem('token', localStorageToken);
                 navigate(Routes.client.category);
             } else {
-                // Handle authentication error
                 setError('Invalid credentials. Please try again.');
             }
         } catch (error) {
-            // Handle network or server errors
             setError('An error occurred. Please try again later.');
         }
-
     };
-
+    
 
     return (
         <>
@@ -63,7 +83,7 @@ export default function SignInFormComponent() {
                     <form className="space-y-6" onSubmit={handleLogin}>
                         <div>
                             <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
-                                Elektroninis paštas
+                                Prisijungimo vardas
                             </label>
                             <div className="mt-2">
                                 <input

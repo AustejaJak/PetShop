@@ -15,7 +15,7 @@ export default function RegisterFormComponent() {
         event.preventDefault();
     
         try {
-            const response = await fetch('http://localhost:5088/api/User/register', {
+            const response = await fetch('http://localhost:5088/api/Authenticate/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

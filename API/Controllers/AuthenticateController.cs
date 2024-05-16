@@ -51,7 +51,7 @@ public class AuthenticateController : ControllerBase
             var token = CreateToken(authClaims);
             var refreshToken = GenerateRefreshToken();
 
-            _ = int.TryParse(_configuration["JWT:RefreshTokenValidityInDays"], out int refreshTokenValidityInDays);
+            var refreshTokenValidityInDays = 7;
 
             user.RefreshToken = refreshToken;
             user.RefreshTokenExpiryTime = DateTime.Now.AddDays(refreshTokenValidityInDays);
@@ -120,7 +120,7 @@ public class AuthenticateController : ControllerBase
         {
             await _userManager.AddToRoleAsync(user, UserRoles.User);
         }
-        return Ok(new Response { Status = "Success", Message = "User created successfully!" });
+        return Ok(new Response { Status = "Success", Message = "Admin-user created successfully!" });
     }
 
     [HttpPost]
@@ -195,7 +195,8 @@ public class AuthenticateController : ControllerBase
     private JwtSecurityToken CreateToken(List<Claim> authClaims)
     {
         var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
-        _ = int.TryParse(_configuration["JWT:TokenValidityInMinutes"], out int tokenValidityInMinutes);
+
+        var tokenValidityInMinutes = 15;
 
         var token = new JwtSecurityToken(
             issuer: _configuration["JWT:ValidIssuer"],
