@@ -3197,24 +3197,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\auste\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\auste\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\petshop\\PetShop\\api\\API.csproj",
+      "projectUniqueName": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\API\\API.csproj",
       "projectName": "API",
-      "projectPath": "D:\\petshop\\PetShop\\api\\API.csproj",
+      "projectPath": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\API\\API.csproj",
       "packagesPath": "C:\\Users\\auste\\.nuget\\packages\\",
-      "outputPath": "D:\\petshop\\PetShop\\api\\obj\\",
+      "outputPath": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\API\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
         "C:\\Users\\auste\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
