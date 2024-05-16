@@ -3,15 +3,15 @@ using API.Entities;
 
 namespace API.Data
 {
-    public class ApplicationDbContext: DbContext
+    public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options){}
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Poster> Posters { get; set; }
         public DbSet<Product> Products { get; set; }
 
         public DbSet<User> Users { get; set; }
-         public DbSet<Wish> Wishes { get; set; }
+        public DbSet<Wish> Wishes { get; set; }
     }
 }
