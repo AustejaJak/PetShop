@@ -13,6 +13,7 @@
           "Microsoft.AspNetCore.OpenApi": "8.0.3",
           "Microsoft.EntityFrameworkCore.Design": "8.0.4",
           "Pomelo.EntityFrameworkCore.MySql": "8.0.2",
+          "Stripe": "1.12.0",
           "Swashbuckle.AspNetCore": "6.4.0"
         },
         "runtime": {
@@ -555,6 +556,25 @@
           }
         }
       },
+      "RestSharp/105.0.1": {
+        "runtime": {
+          "lib/net4/RestSharp.dll": {
+            "assemblyVersion": "105.0.1.0",
+            "fileVersion": "105.0.1.0"
+          }
+        }
+      },
+      "Stripe/1.12.0": {
+        "dependencies": {
+          "RestSharp": "105.0.1"
+        },
+        "runtime": {
+          "lib/net40/Stripe.dll": {
+            "assemblyVersion": "1.12.0.0",
+            "fileVersion": "1.12.0.0"
+          }
+        }
+      },
       "Swashbuckle.AspNetCore/6.4.0": {
         "dependencies": {
           "Microsoft.Extensions.ApiDescription.Server": "6.0.5",
@@ -984,6 +1004,20 @@
       "sha512": "sha512-XjnlcxVBLnEMbyEc5cZzgZeDyLvAniACZQ04W1slWN0f4rmfNzl98gEMvHnFH0fMDF06z9MmgGi/Sr7hJ+BVnw==",
       "path": "pomelo.entityframeworkcore.mysql/8.0.2",
       "hashPath": "pomelo.entityframeworkcore.mysql.8.0.2.nupkg.sha512"
+    },
+    "RestSharp/105.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2jEivNmSZFsK/iyoOu0l9+pEM2hXLQCvOQdLgQcr92cdnirl2xm+Wddy7lP6JTwZSLjAQ1ogHlal1tLu5hfZPw==",
+      "path": "restsharp/105.0.1",
+      "hashPath": "restsharp.105.0.1.nupkg.sha512"
+    },
+    "Stripe/1.12.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-IZ4xMz4vWqgH7RUyQMU/bljlr+gr/r/EMKUIg/PjTVjuyuXoXjbalgDnfDZ77GogCzJME3XIP1anBIMbaF4gvg==",
+      "path": "stripe/1.12.0",
+      "hashPath": "stripe.1.12.0.nupkg.sha512"
     },
     "Swashbuckle.AspNetCore/6.4.0": {
       "type": "package",

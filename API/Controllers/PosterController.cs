@@ -1,8 +1,11 @@
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using API.Data;
 using API.Entities;
 using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace API.Controllers
 {
@@ -38,5 +41,31 @@ namespace API.Controllers
             return Ok(poster);
         }
 
+        // New method to find similar products
+        [HttpGet("similar/{id}")]
+        public async Task<ActionResult<IEnumerable<Poster>>> GetSimilarPosters(int id)
+        {
+            var poster = await _context.Posters.FindAsync(id);
+
+            if (poster == null)
+            {
+                return NotFound();
+            }
+
+            // Extract the first word from the product name
+            var firstWord = poster.Pavadinimas.Split(' ').FirstOrDefault();
+
+            if (string.IsNullOrEmpty(firstWord))
+            {
+                return Ok(new List<Poster>());
+            }
+
+            // Query for similar products based on the first word of the name
+            var similarPosters = await _context.Posters
+                .Where(p => p.GyvunuKategorija == poster.GyvunuKategorija && p.Pavadinimas.StartsWith(firstWord))
+                .ToListAsync();
+
+            return Ok(similarPosters);
+        }
     }
 }

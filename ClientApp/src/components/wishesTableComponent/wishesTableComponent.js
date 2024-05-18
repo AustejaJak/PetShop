@@ -1,5 +1,6 @@
-import { Fragment, useEffect, useState } from 'react';
-import axios from 'axios'; // Import Axios for making HTTP requests
+import React, { Fragment, useEffect, useState } from 'react';
+import axios from 'axios';
+import Routes from '../../routes/routes'; // Import your Routes object
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -8,9 +9,7 @@ function classNames(...classes) {
 export default function WishesTableComponent() {
     const [wishes, setWishes] = useState([]);
 
-
     useEffect(() => {
-        // Function to fetch wishes from the API
         const fetchWishes = async () => {
             try {
                 const response = await axios.get('http://localhost:5088/api/Wish', {
@@ -24,9 +23,8 @@ export default function WishesTableComponent() {
             }
         };
 
-        // Call the fetchWishes function when the component mounts
         fetchWishes();
-    }, []); // Empty dependency array ensures that the effect runs only once when the component mounts
+    }, []);
 
     return (
         <div className="px-4 sm:px-6 lg:px-8 mx-80 my-20">
@@ -77,7 +75,7 @@ export default function WishesTableComponent() {
                                             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{wish.kiekis}</td>
                                             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{wish.tiekejas}</td>
                                             <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
-                                                <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                                                <a href={`/edit-wish/${wish.noroNr}`} className="text-indigo-600 hover:text-indigo-900">
                                                     Edit<span className="sr-only">, {wish.produktoPavadinimas}</span>
                                                 </a>
                                             </td>

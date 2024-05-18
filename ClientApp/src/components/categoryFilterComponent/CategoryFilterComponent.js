@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 const subCategories = [
-    { name: 'Šunų prekės', slug: 'sunu-prekes' },
+    { name: 'suo', slug: 'sunu-prekes' },
     { name: 'Kačių prekės', slug: 'kaciu-prekes' },
     { name: 'Graužikų prekės', slug: 'grauziku-prekes' },
     { name: 'Paukščių prekės', slug: 'pauksciu-prekes' },

@@ -13,6 +13,7 @@ const Routes = {
       orderHistory: "/order-history",
       wishes: "/wishes",
       addWishes: "/add-wishes",
+      editWish: "/edit-wish/:wishId"
     },
   };
 
