@@ -1,75 +1,42 @@
 import Routes from "../../routes/routes";
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AuthContext from '../../AuthContext';
 
 export default function SignInFormComponent() {
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const { setAccessToken, setRefreshToken } = useContext(AuthContext);
 
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            // Fetch the token from localStorage
-            const tokenString = localStorage.getItem('token');
-            if (!tokenString) {
-                throw new Error('No token found in localStorage');
-            }
-            let accessToken = tokenString; // Since token is stored as a plain string
-    
-            console.log('Access Token:', accessToken);
-    
             const loginResponse = await fetch('http://localhost:5088/api/Authenticate/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: 'Bearer ' + accessToken,
                 },
                 body: JSON.stringify({
                     username,
                     password,
                 }),
             });
-    
+
             if (loginResponse.ok) {
                 const responseData = await loginResponse.json();
                 localStorage.setItem('token', responseData.token); // Store the token string directly
+                localStorage.setItem('refreshToken', responseData.refreshToken); // Store the refresh token
+
+                console.log('AccessToken:', responseData.token);
+                console.log('RefreshToken:', responseData.refreshToken);
+
+                // Update the context with the new tokens
+                setAccessToken(responseData.token);
+                setRefreshToken(responseData.refreshToken);
+
                 navigate(Routes.client.category);
-    
-                // Update the accessToken from the latest token object
-                let accessToken = responseData.token;
-                let refreshToken = responseData.refreshToken;
-                console.log('Updated Access Token:', accessToken);
-    
-                // Set interval for token refresh
-                setInterval(async () => {
-                    try {
-                        const refreshResponse = await fetch('http://localhost:5088/api/Authenticate/refresh-token', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                Authorization: 'Bearer ' + accessToken,
-                            },
-                            body: JSON.stringify({
-                                accessToken: accessToken,
-                                refreshToken: refreshToken // Pass both access token and refresh token
-                            }),
-                        });
-    
-                        if (refreshResponse.ok) {
-                            const refreshedData = await refreshResponse.json();
-                            localStorage.setItem('token', refreshedData.accessToken); // Update the token in localStorage
-                            accessToken = refreshedData.accessToken; // Update the accessToken with the new token
-                            refreshToken = refreshedData.refreshToken; // Update the refreshToken with the new token
-                            console.log('Refreshed Access Token:', accessToken);
-                        } else {
-                            console.log('Failed to refresh token:', refreshResponse.status);
-                        }
-                    } catch (error) {
-                        console.log('Error refreshing token:', error);
-                    }
-                }, 59000); // Interval set
             } else {
                 setError('Invalid credentials. Please try again.');
             }
