@@ -196,7 +196,7 @@ public class AuthenticateController : ControllerBase
     {
         var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
 
-        var tokenValidityInMinutes = 15;
+        var tokenValidityInMinutes = 1;
 
         var token = new JwtSecurityToken(
             issuer: _configuration["JWT:ValidIssuer"],

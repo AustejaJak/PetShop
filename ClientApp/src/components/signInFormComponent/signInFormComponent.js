@@ -11,12 +11,18 @@ export default function SignInFormComponent() {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const accessTokenString = localStorage.getItem('token');
-            const accessToken = JSON.parse(accessTokenString).token;
+            // Fetch the token from localStorage
+            const tokenString = localStorage.getItem('token');
+            if (!tokenString) {
+                throw new Error('No token found in localStorage');
+            }
+            let accessToken = tokenString; // Since token is stored as a plain string
+    
+            console.log('Access Token:', accessToken);
+    
             const loginResponse = await fetch('http://localhost:5088/api/Authenticate/login', {
                 method: 'POST',
                 headers: {
-                    'Access-Control-Allow-Origin': '*',
                     'Content-Type': 'application/json',
                     Authorization: 'Bearer ' + accessToken,
                 },
@@ -25,46 +31,55 @@ export default function SignInFormComponent() {
                     password,
                 }),
             });
-
-            // if (loginResponse.status === 401) {
-            //     const token = localStorage.getItem('token');
-                //     console.log(token);
-                //     const refreshResponse = await fetch('http://localhost:5088/api/Authenticate/refresh-token', {
-                //         method: 'POST',
-                //         headers: {
-                //             'Access-Control-Allow-Origin': '*',
-                //             'Content-Type': 'application/json',
-                //             Authorization: 'Bearer ' + token,
-                //         },
-                //         body: JSON.stringify({
-                //             username,
-                //             password,
-                //         }),
-                //     });
-                //     console.log(refreshResponse);
-                //     if (refreshResponse.ok) {
-                //         const token = await refreshResponse.text();
-                //         localStorage.setItem('token', token);
-                //         handleLogin(e);
-                //     } else {
-                //         setError('Token expired.');
-                //     }
-            
-            // }else 
-                if (loginResponse.ok) {
-                const token = await loginResponse.text();
-                const localStorageToken = JSON.parse(token).token;
-                localStorage.setItem('token', localStorageToken);
+    
+            if (loginResponse.ok) {
+                const responseData = await loginResponse.json();
+                localStorage.setItem('token', responseData.token); // Store the token string directly
                 navigate(Routes.client.category);
+    
+                // Update the accessToken from the latest token object
+                let accessToken = responseData.token;
+                let refreshToken = responseData.refreshToken;
+                console.log('Updated Access Token:', accessToken);
+    
+                // Set interval for token refresh
+                setInterval(async () => {
+                    try {
+                        const refreshResponse = await fetch('http://localhost:5088/api/Authenticate/refresh-token', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                Authorization: 'Bearer ' + accessToken,
+                            },
+                            body: JSON.stringify({
+                                accessToken: accessToken,
+                                refreshToken: refreshToken // Pass both access token and refresh token
+                            }),
+                        });
+    
+                        if (refreshResponse.ok) {
+                            const refreshedData = await refreshResponse.json();
+                            localStorage.setItem('token', refreshedData.accessToken); // Update the token in localStorage
+                            accessToken = refreshedData.accessToken; // Update the accessToken with the new token
+                            refreshToken = refreshedData.refreshToken; // Update the refreshToken with the new token
+                            console.log('Refreshed Access Token:', accessToken);
+                        } else {
+                            console.log('Failed to refresh token:', refreshResponse.status);
+                        }
+                    } catch (error) {
+                        console.log('Error refreshing token:', error);
+                    }
+                }, 59000); // Interval set
             } else {
                 setError('Invalid credentials. Please try again.');
             }
         } catch (error) {
-            setError('An error occurred. Please try again later.');
+            console.error('Error during login:', error);
+            setError('An error occurred during login. Please try again.');
         }
     };
     
-
+    
     return (
         <>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
