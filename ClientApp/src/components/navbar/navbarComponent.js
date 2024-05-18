@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { PlusIcon } from '@heroicons/react/20/solid'
@@ -10,6 +10,88 @@ function classNames(...classes) {
 }
 
 export default function NavbarComponent() {
+
+    const [username, setUsername] = useState('');
+
+    const handleSignOut = async () => {
+        try {
+            const token = localStorage.getItem('token'); // Retrieve token
+    
+            if (!token) {
+                console.error('Authorization token not found.');
+                return;
+            }
+    
+            const usernameResponse = await fetch('http://localhost:5088/api/User/get-username', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+    
+            if (!usernameResponse.ok) {
+                console.error('Failed to fetch username:', usernameResponse.status);
+                return;
+            }
+    
+            const userData = await usernameResponse.json();
+            const username = userData.username;
+    
+            const revokeResponse = await fetch(`http://localhost:5088/api/Authenticate/revoke/${username}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+    
+            if (revokeResponse.ok) {
+                console.log('User logged out successfully');
+                // Redirect to the login page
+                window.location.href = Routes.client.login;
+            } else {
+                console.error('Failed to log out:', revokeResponse.status);
+            }
+        } catch (error) {
+            console.error('Error logging out:', error);
+        }
+    };
+    
+    useEffect(() => {
+        // Fetch username when the component mounts
+        fetchUsername();
+    }, []);
+    
+    const fetchUsername = async () => {
+        try {
+            // Retrieve JWT token from local storage or wherever it's stored
+            const token = localStorage.getItem('token'); // Assuming token is stored in local storage
+    
+            if (!token) {
+                console.error('Authorization token not found.');
+                return;
+            }
+    
+            const response = await fetch('http://localhost:5088/api/User/get-username', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+    
+            if (response.ok) {
+                const data = await response.json();
+                setUsername(data.username);
+            } else {
+                console.error('Failed to fetch username:', response.status);
+            }
+        } catch (error) {
+            console.error('Error fetching username:', error);
+        }
+    };
+
     return (
         <Disclosure as="nav" className="bg-white shadow">
             {({ open }) => (
@@ -127,15 +209,17 @@ export default function NavbarComponent() {
                                                 </Menu.Item>
                                                 <Menu.Item>
                                                     {({ active }) => (
-                                                        <a
-                                                            href={Routes.client.base}
+                                                        <button
+                                                            onClick={handleSignOut}
+                                                            type="button"
                                                             className={classNames(
-                                                                active ? 'bg-gray-100' : '',
-                                                                'block px-4 py-2 text-sm text-gray-700'
+                                                                'block w-full px-4 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2',
+                                                                active ? 'bg-gray-100' : ''
                                                             )}
+                                                            style={{ backgroundColor: active ? '#F3F4F6' : 'white' }}
                                                         >
-                                                            Atsijungti
-                                                        </a>
+                                                            <span className="block text-left">Atsijungti</span>
+                                                        </button>
                                                     )}
                                                 </Menu.Item>
                                             </Menu.Items>
@@ -226,7 +310,8 @@ export default function NavbarComponent() {
                         </div>
                     </Disclosure.Panel>
                 </>
-            )}
-        </Disclosure>
+            )
+            }
+        </Disclosure >
     )
 }

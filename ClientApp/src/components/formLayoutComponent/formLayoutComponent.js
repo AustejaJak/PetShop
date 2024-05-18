@@ -16,6 +16,8 @@ export default function FormLayoutComponent() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
+
+            const token = localStorage.getItem('token');
             // Convert formData to JSON string
             const formDataJson = JSON.stringify(formData);
     
@@ -24,7 +26,8 @@ export default function FormLayoutComponent() {
                 formDataJson,
                 {
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ` + token
                     }
                 }
             );

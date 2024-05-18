@@ -11,6 +11,7 @@ import CheckoutFormPage from "./checkoutFormPage/checkoutFormPage";
 import OrderHistoryPage from "./orderHistoryPage/orderHistoryPage";
 import WishesPage from "./wishesPage/wishesPage";
 import AddWishesPage from "./addWishesPage/addWishesPage";
+import { AuthProvider } from "../../AuthContext"; 
 
 // const userNavigation = [
 //   { name: "Mano paskyra"},
@@ -27,10 +28,11 @@ const Client = () => {
   return (
     <>
       {/* <Header profileNavigation={userNavigation} navigation={navigation} /> */}
-      <DomRoutes>
+          <AuthProvider>
+          <DomRoutes>
         <Route path={Routes.client.base} element={<HeroSectionComponent /> } />
-          <Route path={Routes.client.login} element={<SignInPage /> } />
           <Route path={Routes.client.register} element={<RegisterPage /> } />
+          <Route path={Routes.client.login} element={<SignInPage /> } />
           <Route path={Routes.client.category} element={<ProductPage /> } />
           <Route path={Routes.client.individualProduct} element={<ProductOverviewPage /> } />
           <Route path={Routes.client.profile} element={<ProfilePage /> } />
@@ -39,7 +41,8 @@ const Client = () => {
           <Route path={Routes.client.orderHistory} element={<OrderHistoryPage /> } />
         <Route path={Routes.client.wishes} element={<WishesPage /> } />
         <Route path={Routes.client.addWishes} element={<AddWishesPage /> } />
-      </DomRoutes>
+          </DomRoutes>
+        </AuthProvider>
     </>
   );
 };
