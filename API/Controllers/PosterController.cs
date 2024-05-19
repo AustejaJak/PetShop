@@ -62,7 +62,7 @@ namespace API.Controllers
 
             // Query for similar products based on the first word of the name
             var similarPosters = await _context.Posters
-                .Where(p => p.GyvunuKategorija == poster.GyvunuKategorija && p.Pavadinimas.StartsWith(firstWord))
+                .Where(p => p.GyvunuKategorija == poster.GyvunuKategorija && p.Pavadinimas.StartsWith(firstWord) && poster.SkelbimoNr != p.SkelbimoNr)
                 .ToListAsync();
 
             return Ok(similarPosters);
