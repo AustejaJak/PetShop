@@ -66,7 +66,7 @@ export default function CheckoutFormComponent() {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             },
-          cost, // amount in cents
+          cost,
 
         });
         console.log(response.data.clientSecret);
