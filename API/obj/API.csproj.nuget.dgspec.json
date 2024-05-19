@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\petshop\\PetShop\\api\\API.csproj": {}
+    "C:\\Users\\jusja\\Documents\\GitHub\\PetShop\\API\\API.csproj": {}
   },
   "projects": {
-    "D:\\petshop\\PetShop\\api\\API.csproj": {
+    "C:\\Users\\jusja\\Documents\\GitHub\\PetShop\\API\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\petshop\\PetShop\\api\\API.csproj",
+        "projectUniqueName": "C:\\Users\\jusja\\Documents\\GitHub\\PetShop\\API\\API.csproj",
         "projectName": "API",
-        "projectPath": "D:\\petshop\\PetShop\\api\\API.csproj",
-        "packagesPath": "C:\\Users\\auste\\.nuget\\packages\\",
-        "outputPath": "D:\\petshop\\PetShop\\api\\obj\\",
+        "projectPath": "C:\\Users\\jusja\\Documents\\GitHub\\PetShop\\API\\API.csproj",
+        "packagesPath": "C:\\Users\\jusja\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jusja\\Documents\\GitHub\\PetShop\\API\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\auste\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\jusja\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,6 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -95,7 +92,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300-preview.24203.14/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

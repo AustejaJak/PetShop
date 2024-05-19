@@ -38,5 +38,31 @@ namespace API.Controllers
             return Ok(poster);
         }
 
+        [HttpPost]
+        public async Task<ActionResult<Poster>> AddPoster(Poster model)
+        {
+            model.SkelbimoValidacija="true";
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var poster = new Poster
+            {
+                GyvunuKategorija = model.GyvunuKategorija,
+                Pavadinimas = model.Pavadinimas,
+                Kiekis = model.Kiekis,
+                Kaina = model.Kaina,
+                Aprasas = model.Aprasas,
+                Nuotrauka = model.Nuotrauka,
+                Ivertinimas = 0,
+                SkelbimoValidacija = model.SkelbimoValidacija
+            };
+
+            _context.Posters.Add(poster);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetPosters), new { id = poster.SkelbimoNr }, poster);
+        }
+
     }
 }
