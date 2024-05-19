@@ -63,7 +63,11 @@ export default function CheckoutFormComponent() {
       try {
         const cost = (totalPrice + 3.00);
         const response = await axios.post('http://localhost:5088/api/Stripe/Create-Payment-Intent', {
-          amount: cost, // amount in cents
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            },
+          cost, // amount in cents
+
         });
         console.log(response.data.clientSecret);
         setClientSecret(response.data.clientSecret);
