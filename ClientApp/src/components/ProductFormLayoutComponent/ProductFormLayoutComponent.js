@@ -12,6 +12,7 @@ export default function FormLayoutComponent() {
         Kaina: '',
         Aprasas: '',
         Nuotrauka: '',
+        SkelbimoValidacija: 'false',
     });
 
     const handleSubmit = async (event) => {
@@ -29,7 +30,7 @@ export default function FormLayoutComponent() {
                         'Authorization': 'Bearer ' + token
                     }
                 }
-                
+
             );
             console.log('Poster added:', response.data);
             navigate('/shop/:category');
@@ -110,25 +111,11 @@ export default function FormLayoutComponent() {
                                 </div>
                             </div>
                         </div>
-                        <div className="sm:col-span-4">
-                            <label htmlFor="SkelbimoValidacija" className="block text-sm font-medium leading-6 text-gray-900">
-                                SkelbimoValidacija
-                            </label>
-                            <div className="mt-2">
-                                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                    <input
-                                        type="text"
-                                        name="SkelbimoValidacija"
-                                        id="SkelbimoValidacija"
-                                        value={formData.SkelbimoValidacija}
-                                        onChange={handleChange}
-                                        autoComplete="SkelbimoValidacija"
-                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        placeholder="SkelbimoValidacija"
-                                    />
-                                </div>
-                            </div>
-                        </div>
+                        <input
+                            type="hidden"
+                            name="SkelbimoValidacija"
+                            value="false"
+                        />
                     </div>
                 </div>
                 <button

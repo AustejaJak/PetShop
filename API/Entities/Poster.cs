@@ -13,7 +13,7 @@ namespace API.Entities
         public string Aprasas { get; set; } = null!; 
         public string Nuotrauka { get; set; } = null!; 
         public int Ivertinimas { get; set; }
-        public string SkelbimoValidacija { get; set; } = null!;
+        public string SkelbimoValidacija { get; set; } = "false";
 
     }
 }
