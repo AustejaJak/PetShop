@@ -62,11 +62,13 @@ public class AuthenticateController : ControllerBase
             {
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
                 RefreshToken = refreshToken,
-                Expiration = token.ValidTo
+                Expiration = token.ValidTo,
+                Roles = userRoles
             });
         }
         return Unauthorized();
     }
+
 
     [HttpPost]
     [Route("register")]
@@ -109,19 +111,15 @@ public class AuthenticateController : ControllerBase
 
         if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
             await _roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
-        if (!await _roleManager.RoleExistsAsync(UserRoles.User))
-            await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
 
         if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
         {
             await _userManager.AddToRoleAsync(user, UserRoles.Admin);
         }
-        if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
-        {
-            await _userManager.AddToRoleAsync(user, UserRoles.User);
-        }
+
         return Ok(new Response { Status = "Success", Message = "Admin-user created successfully!" });
     }
+
 
     [HttpPost]
     [Route("refresh-token")]
