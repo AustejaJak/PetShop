@@ -615,3 +615,5 @@ C:\Users\fish\Desktop\crangeeee\PetShop\API\bin\Debug\net8.0\Stripe.dll
 >>>>>>> EditWishes-and-similarproducts
 C:\Users\auste\Desktop\KTU\3 kursas\PSA\PetShop\api\bin\Debug\net8.0\RestSharp.dll
 C:\Users\auste\Desktop\KTU\3 kursas\PSA\PetShop\api\bin\Debug\net8.0\Stripe.dll
+C:\Users\jusja\Documents\GitHub\PetShop\API\bin\Debug\net8.0\RestSharp.dll
+C:\Users\jusja\Documents\GitHub\PetShop\API\bin\Debug\net8.0\Stripe.dll

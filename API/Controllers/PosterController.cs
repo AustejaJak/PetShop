@@ -37,11 +37,20 @@ namespace API.Controllers
 
             return Ok(poster);
         }
-
+        [HttpPost("Delete/{id}")]
+        public async Task<ActionResult<Poster>> DeletePosterById(int id)
+        {
+            var poster = await _context.Posters.FindAsync(id);
+            if(poster==null){
+                return NotFound();
+            }
+            var poster2= _context.Posters.Remove(poster).Entity;
+            await _context.SaveChangesAsync();
+            return Ok(poster2);
+        }
         [HttpPost]
         public async Task<ActionResult<Poster>> AddPoster(Poster model)
         {
-            model.SkelbimoValidacija="true";
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
