@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Navigate } from 'react-router-dom';
 
 export default function ProductListComponent(props) {
     const { posters } = props;
@@ -18,7 +19,20 @@ export default function ProductListComponent(props) {
             console.error('Error adding to cart:', error);
         }
     };
-
+    const removePoster = async (posterId) => {
+        try {
+            const token = localStorage.getItem('token'); // Retrieve token
+            await axios.post(`http://localhost:5088/api/Poster/Delete/${posterId}`, null, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            console.log('Removed:', posterId);
+            window.location.reload(); // Re-fetch posters after adding to cart
+        } catch (error) {
+            console.error('Error removing:', error);
+        }
+    };
     var posterDetails = posters.map((poster) => (
         <div key={poster.skelbimoNr} className="group">
             <a href={`/product/${poster.skelbimoNr}`}>
@@ -35,6 +49,9 @@ export default function ProductListComponent(props) {
             <p className="mt-1 text-lg font-medium text-gray-900">{poster.kaina} €</p>
             <button onClick={() => addToCart(poster.skelbimoNr)} className="mt-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded">
                 Pridėti į krepšelį
+            </button>
+            <button onClick={() => removePoster(poster.skelbimoNr)} className="mt-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded">
+                Pašalinti skelbimą
             </button>
         </div>
     ));
