@@ -16,6 +16,13 @@ const Routes = {
       addProduct: "/add-product",
       editWish: "/edit-wish/:wishId"
     },
+    admin: {
+      prefix: "/admin",
+      login: "/log-in",
+      register: "/sign-up-admin",
+      base: "/base",
+      products: "/product-validation",
+    }
   };
 
 export default Routes;
