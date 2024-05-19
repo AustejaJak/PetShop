@@ -3,9 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using API.Data;
 using API.Entities;
 using Microsoft.AspNetCore.Authorization;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace API.Controllers
 {
@@ -41,7 +38,6 @@ namespace API.Controllers
             return Ok(poster);
         }
 
-<<<<<<< HEAD
         [HttpPost]
         public async Task<ActionResult<Poster>> AddPoster(Poster model)
         {
@@ -68,7 +64,6 @@ namespace API.Controllers
             return CreatedAtAction(nameof(GetPosters), new { id = poster.SkelbimoNr }, poster);
         }
 
-=======
         // New method to find similar products
         [HttpGet("similar/{id}")]
         public async Task<ActionResult<IEnumerable<Poster>>> GetSimilarPosters(int id)
@@ -95,6 +90,5 @@ namespace API.Controllers
 
             return Ok(similarPosters);
         }
->>>>>>> EditWishes-and-similarproducts
     }
 }

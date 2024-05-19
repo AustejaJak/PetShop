@@ -27,11 +27,7 @@ export default function FormLayoutComponent() {
                 {
                     headers: {
                         'Content-Type': 'application/json',
-<<<<<<< HEAD
-                        'Authorization': 'Bearer ' + token
-=======
                         'Authorization': `Bearer ` + token
->>>>>>> naujas
                     }
                 }
             );
