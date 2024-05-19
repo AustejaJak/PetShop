@@ -12,10 +12,14 @@ import OrderHistoryPage from "./orderHistoryPage/orderHistoryPage";
 import WishesPage from "./wishesPage/wishesPage";
 import AddWishesPage from "./addWishesPage/addWishesPage";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import AddProductPage from "./addProductPage/addProductPage";
 =======
 import EditWishPage from "./editWishesPage/editWishesPage";
 >>>>>>> EditWishes-and-similarproducts
+=======
+import { AuthProvider } from "../../AuthContext"; 
+>>>>>>> naujas
 
 // const userNavigation = [
 //   { name: "Mano paskyra"},
@@ -32,10 +36,11 @@ const Client = () => {
   return (
     <>
       {/* <Header profileNavigation={userNavigation} navigation={navigation} /> */}
-      <DomRoutes>
+          <AuthProvider>
+          <DomRoutes>
         <Route path={Routes.client.base} element={<HeroSectionComponent /> } />
-          <Route path={Routes.client.login} element={<SignInPage /> } />
           <Route path={Routes.client.register} element={<RegisterPage /> } />
+          <Route path={Routes.client.login} element={<SignInPage /> } />
           <Route path={Routes.client.category} element={<ProductPage /> } />
           <Route path={Routes.client.individualProduct} element={<ProductOverviewPage /> } />
           <Route path={Routes.client.profile} element={<ProfilePage /> } />
@@ -45,11 +50,16 @@ const Client = () => {
         <Route path={Routes.client.wishes} element={<WishesPage /> } />
         <Route path={Routes.client.addWishes} element={<AddWishesPage /> } />
 <<<<<<< HEAD
+<<<<<<< HEAD
         <Route path={Routes.client.addProduct} element={<AddProductPage /> } />
 =======
         <Route path={Routes.client.editWish} element={<EditWishPage /> } />
 >>>>>>> EditWishes-and-similarproducts
       </DomRoutes>
+=======
+          </DomRoutes>
+        </AuthProvider>
+>>>>>>> naujas
     </>
   );
 };
