@@ -11,7 +11,11 @@ import CheckoutFormPage from "./checkoutFormPage/checkoutFormPage";
 import OrderHistoryPage from "./orderHistoryPage/orderHistoryPage";
 import WishesPage from "./wishesPage/wishesPage";
 import AddWishesPage from "./addWishesPage/addWishesPage";
+<<<<<<< HEAD
 import AddProductPage from "./addProductPage/addProductPage";
+=======
+import EditWishPage from "./editWishesPage/editWishesPage";
+>>>>>>> EditWishes-and-similarproducts
 
 // const userNavigation = [
 //   { name: "Mano paskyra"},
@@ -40,7 +44,11 @@ const Client = () => {
           <Route path={Routes.client.orderHistory} element={<OrderHistoryPage /> } />
         <Route path={Routes.client.wishes} element={<WishesPage /> } />
         <Route path={Routes.client.addWishes} element={<AddWishesPage /> } />
+<<<<<<< HEAD
         <Route path={Routes.client.addProduct} element={<AddProductPage /> } />
+=======
+        <Route path={Routes.client.editWish} element={<EditWishPage /> } />
+>>>>>>> EditWishes-and-similarproducts
       </DomRoutes>
     </>
   );

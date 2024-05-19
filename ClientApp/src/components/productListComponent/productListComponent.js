@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 
 export default function ProductListComponent(props) {
-    const { posters, fetchPosters } = props;
+    const { posters } = props;
 
     const addToCart = async (posterId) => {
         try {

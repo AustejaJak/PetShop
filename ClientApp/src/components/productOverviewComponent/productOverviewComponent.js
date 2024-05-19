@@ -1,26 +1,35 @@
-import { RadioGroup, Tab } from '@headlessui/react'
-import { StarIcon } from '@heroicons/react/20/solid'
+import { RadioGroup, Tab } from '@headlessui/react';
+import { StarIcon } from '@heroicons/react/20/solid';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
+    return classes.filter(Boolean).join(' ');
 }
 
 export default function ProductOverviewComponent() {
     const { productId } = useParams();
     const [product, setProduct] = useState(null);
+    const [similarProducts, setSimilarProducts] = useState([]);
 
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const response = await axios.get(`http://localhost:5088/api/Poster/${productId}`,{
+                const response = await axios.get(`http://localhost:5088/api/Poster/${productId}`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`
                     }
                 });
                 setProduct(response.data);
+
+                // Fetch similar products
+                const similarResponse = await axios.get(`http://localhost:5088/api/Poster/similar/${productId}`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+                setSimilarProducts(similarResponse.data);
             } catch (error) {
                 console.error('Error fetching product:', error);
             }
@@ -134,6 +143,35 @@ export default function ProductOverviewComponent() {
                                 </button>
                             </div>
                         </form>
+                    </div>
+                </div>
+
+                {/* Similar products */}
+                <div className="mt-16">
+                    <h2 className="text-2xl font-bold tracking-tight text-gray-900">Similar Products</h2>
+                    <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+                        {similarProducts.map((similarProduct) => (
+                            <div key={similarProduct.skelbimoNr} className="group relative">
+                                <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                                    <img
+                                        src={similarProduct.nuotrauka}
+                                        alt={similarProduct.pavadinimas}
+                                        className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                                    />
+                                </div>
+                                <div className="mt-4 flex justify-between">
+                                    <div>
+                                        <h3 className="text-sm text-gray-700">
+                                            <a href={`/product/${similarProduct.skelbimoNr}`}>
+                                                <span aria-hidden="true" className="absolute inset-0" />
+                                                {similarProduct.pavadinimas}
+                                            </a>
+                                        </h3>
+                                        <p className="mt-1 text-sm text-gray-500">{similarProduct.kaina} €</p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>

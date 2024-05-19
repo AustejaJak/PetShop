@@ -1,50 +1,52 @@
 import Routes from "../../routes/routes";
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AuthContext from '../../AuthContext';
 
 export default function SignInFormComponent() {
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const { setAccessToken, setRefreshToken } = useContext(AuthContext);
 
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const token = localStorage.getItem('token');
-            console.log(token);
-            const response = await fetch('http://localhost:5088/api/User/login', {
+            const loginResponse = await fetch('http://localhost:5088/api/Authenticate/login', {
                 method: 'POST',
                 headers: {
-                    'Access-Control-Allow-Origin': '*',
                     'Content-Type': 'application/json',
-                    Authorization: 'Bearer ' + token, 
                 },
                 body: JSON.stringify({
                     username,
                     password,
                 }),
             });
-            console.log(response);
-            if (response.ok) {
-                // Extract token from response text
-                const token = await response.text();
-                // Store token in browser storage
-                localStorage.setItem('token', token);
-                // Redirect to a different page upon successful login
+
+            if (loginResponse.ok) {
+                const responseData = await loginResponse.json();
+                localStorage.setItem('token', responseData.token); // Store the token string directly
+                localStorage.setItem('refreshToken', responseData.refreshToken); // Store the refresh token
+
+                console.log('AccessToken:', responseData.token);
+                console.log('RefreshToken:', responseData.refreshToken);
+
+                // Update the context with the new tokens
+                setAccessToken(responseData.token);
+                setRefreshToken(responseData.refreshToken);
+
                 navigate(Routes.client.category);
             } else {
-                // Handle authentication error
                 setError('Invalid credentials. Please try again.');
             }
         } catch (error) {
-            // Handle network or server errors
-            setError('An error occurred. Please try again later.');
+            console.error('Error during login:', error);
+            setError('An error occurred during login. Please try again.');
         }
-
     };
-
-
+    
+    
     return (
         <>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -63,7 +65,7 @@ export default function SignInFormComponent() {
                     <form className="space-y-6" onSubmit={handleLogin}>
                         <div>
                             <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
-                                Elektroninis paštas
+                                Prisijungimo vardas
                             </label>
                             <div className="mt-2">
                                 <input

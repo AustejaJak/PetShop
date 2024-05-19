@@ -834,6 +834,31 @@
           }
         }
       },
+      "RestSharp/105.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net4/RestSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net4/RestSharp.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Stripe/1.12.0": {
+        "type": "package",
+        "dependencies": {
+          "RestSharp": "105.0.1"
+        },
+        "compile": {
+          "lib/net40/Stripe.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Stripe.dll": {}
+        }
+      },
       "Swashbuckle.AspNetCore/6.4.0": {
         "type": "package",
         "dependencies": {
@@ -2658,6 +2683,42 @@
         "pomelo.entityframeworkcore.mysql.nuspec"
       ]
     },
+    "RestSharp/105.0.1": {
+      "sha512": "2jEivNmSZFsK/iyoOu0l9+pEM2hXLQCvOQdLgQcr92cdnirl2xm+Wddy7lP6JTwZSLjAQ1ogHlal1tLu5hfZPw==",
+      "type": "package",
+      "path": "restsharp/105.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net35-client/RestSharp.dll",
+        "lib/net35-client/RestSharp.xml",
+        "lib/net35/RestSharp.dll",
+        "lib/net35/RestSharp.xml",
+        "lib/net4-client/RestSharp.dll",
+        "lib/net4-client/RestSharp.xml",
+        "lib/net4/RestSharp.dll",
+        "lib/net4/RestSharp.xml",
+        "lib/sl4-wp71/RestSharp.WindowsPhone.dll",
+        "lib/sl4-wp71/RestSharp.WindowsPhone.xml",
+        "lib/sl4/RestSharp.Silverlight.dll",
+        "lib/sl4/RestSharp.Silverlight.xml",
+        "readme.txt",
+        "restsharp.105.0.1.nupkg.sha512",
+        "restsharp.nuspec"
+      ]
+    },
+    "Stripe/1.12.0": {
+      "sha512": "IZ4xMz4vWqgH7RUyQMU/bljlr+gr/r/EMKUIg/PjTVjuyuXoXjbalgDnfDZ77GogCzJME3XIP1anBIMbaF4gvg==",
+      "type": "package",
+      "path": "stripe/1.12.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net40/Stripe.dll",
+        "stripe.1.12.0.nupkg.sha512",
+        "stripe.nuspec"
+      ]
+    },
     "Swashbuckle.AspNetCore/6.4.0": {
       "sha512": "eUBr4TW0up6oKDA5Xwkul289uqSMgY0xGN4pnbOIBqCcN9VKGGaPvHX3vWaG/hvocfGDP+MGzMA0bBBKz2fkmQ==",
       "type": "package",
@@ -3193,15 +3254,21 @@
       "Microsoft.AspNetCore.OpenApi >= 8.0.3",
       "Microsoft.EntityFrameworkCore.Design >= 8.0.4",
       "Pomelo.EntityFrameworkCore.MySql >= 8.0.2",
+      "Stripe >= 1.12.0",
       "Swashbuckle.AspNetCore >= 6.4.0"
     ]
   },
   "packageFolders": {
+<<<<<<< HEAD
     "C:\\Users\\jusja\\.nuget\\packages\\": {}
+=======
+    "C:\\Users\\auste\\.nuget\\packages\\": {}
+>>>>>>> EditWishes-and-similarproducts
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\jusja\\Documents\\GitHub\\PetShop\\API\\API.csproj",
       "projectName": "API",
       "projectPath": "C:\\Users\\jusja\\Documents\\GitHub\\PetShop\\API\\API.csproj",
@@ -3210,6 +3277,16 @@
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\jusja\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+      "projectUniqueName": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\API\\API.csproj",
+      "projectName": "API",
+      "projectPath": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\API\\API.csproj",
+      "packagesPath": "C:\\Users\\auste\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\API\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\auste\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> EditWishes-and-similarproducts
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3263,6 +3340,10 @@
             "target": "Package",
             "version": "[8.0.2, )"
           },
+          "Stripe": {
+            "target": "Package",
+            "version": "[1.12.0, )"
+          },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
             "version": "[6.4.0, )"
@@ -3290,5 +3371,27 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300-preview.24203.14/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'RestSharp 105.0.1' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
+      "libraryId": "RestSharp",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Stripe 1.12.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Stripe",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
 }
