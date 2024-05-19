@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\api\\API.csproj": {}
+    "C:\\Users\\fish\\Desktop\\crangeeee\\PetShop\\API\\API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\api\\API.csproj": {
+    "C:\\Users\\fish\\Desktop\\crangeeee\\PetShop\\API\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\api\\API.csproj",
+        "projectUniqueName": "C:\\Users\\fish\\Desktop\\crangeeee\\PetShop\\API\\API.csproj",
         "projectName": "API",
-        "projectPath": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\api\\API.csproj",
-        "packagesPath": "C:\\Users\\auste\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\api\\obj\\",
+        "projectPath": "C:\\Users\\fish\\Desktop\\crangeeee\\PetShop\\API\\API.csproj",
+        "packagesPath": "C:\\Users\\fish\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\fish\\Desktop\\crangeeee\\PetShop\\API\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\auste\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\fish\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -71,6 +74,10 @@
               "target": "Package",
               "version": "[1.12.0, )"
             },
+            "Stripe.net": {
+              "target": "Package",
+              "version": "[44.8.0, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.4.0, )"
@@ -95,7 +102,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

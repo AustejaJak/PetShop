@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using API.Data;
 using API.Entities;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,7 +49,9 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
-
+// 5. Stripe
+StripeConfiguration.ApiKey = builder.Configuration["sk_test_51PHusJ2NpebX988JGdtxrJPUBFHIgv9yGIDziPd0LdNOMXo9p6htMvlhoY2EAfSOM6e6I0ZsSbgQP9WfU5iwbIc300aFa162Xt"];
+builder.Services.AddScoped<PaymentIntentService>();
 builder.Services.AddControllers();
 
 // Add IHttpContextAccessor
@@ -64,8 +67,6 @@ builder.Services.AddCors(options =>
                           .AllowCredentials());
 });
 
-
-
 builder.Services.AddDistributedMemoryCache();
 
 // Configure session
@@ -76,8 +77,6 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
     options.Cookie.Name = "CartSession";
 });
-
-
 
 // Configure Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
@@ -114,8 +113,6 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -141,9 +138,6 @@ app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 
-
 app.MapControllers();
 
-
 app.Run();
-
