@@ -15,6 +15,7 @@ import AddProductPage from "./addProductPage/addProductPage";
 import EditWishPage from "./editWishesPage/editWishesPage";
 import { AuthProvider } from "../../AuthContext";
 import AdminRegisterPage from "../admin/adminRegisterPage/adminRegisterPage";
+import UserListPage from "../admin/userListPage/userListPage";
 
 // const userNavigation = [
 //   { name: "Mano paskyra"},
@@ -37,6 +38,7 @@ const Client = () => {
           <Route path={Routes.client.register} element={<RegisterPage />} />
           <Route path={Routes.client.login} element={<SignInPage />} />
           <Route path={Routes.admin.register} element={<AdminRegisterPage />} />
+          <Route path={Routes.admin.base} element={<UserListPage />} />
           <Route path={Routes.client.category} element={<ProductPage />} />
           <Route path={Routes.client.individualProduct} element={<ProductOverviewPage />} />
           <Route path={Routes.client.profile} element={<ProfilePage />} />
