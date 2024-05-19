@@ -3259,23 +3259,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\fish\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\auste\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\fish\\Desktop\\crangeeee\\PetShop\\API\\API.csproj",
+      "projectUniqueName": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\API\\API.csproj",
       "projectName": "API",
-      "projectPath": "C:\\Users\\fish\\Desktop\\crangeeee\\PetShop\\API\\API.csproj",
-      "packagesPath": "C:\\Users\\fish\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\fish\\Desktop\\crangeeee\\PetShop\\API\\obj\\",
+      "projectPath": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\API\\API.csproj",
+      "packagesPath": "C:\\Users\\auste\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\API\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\fish\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\auste\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3356,7 +3352,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
       }
     }
   },
