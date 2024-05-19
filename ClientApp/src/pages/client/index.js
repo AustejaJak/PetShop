@@ -11,6 +11,7 @@ import CheckoutFormPage from "./checkoutFormPage/checkoutFormPage";
 import OrderHistoryPage from "./orderHistoryPage/orderHistoryPage";
 import WishesPage from "./wishesPage/wishesPage";
 import AddWishesPage from "./addWishesPage/addWishesPage";
+import AddProductPage from "./addProductPage/addProductPage";
 
 // const userNavigation = [
 //   { name: "Mano paskyra"},
@@ -39,6 +40,7 @@ const Client = () => {
           <Route path={Routes.client.orderHistory} element={<OrderHistoryPage /> } />
         <Route path={Routes.client.wishes} element={<WishesPage /> } />
         <Route path={Routes.client.addWishes} element={<AddWishesPage /> } />
+        <Route path={Routes.client.addProduct} element={<AddProductPage /> } />
       </DomRoutes>
     </>
   );
