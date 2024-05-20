@@ -53,6 +53,7 @@ export default function ValidatePostersComponent() {
       });
 
       setPosters(posters.filter((poster) => poster.skelbimoNr !== posterId));
+      window.location.reload(); // Re-fetch posters after adding to cart
       setMessage({ text: 'Poster deleted successfully', type: 'success' });
     } catch (error) {
       setMessage({ text: `Error deleting poster: ${error.message}`, type: 'error' });
@@ -74,7 +75,7 @@ export default function ValidatePostersComponent() {
           'Content-Type': 'application/json',
         },
       });
-
+      window.location.reload(); // Re-fetch posters after adding to cart
       setMessage({ text: `Validation assigned successfully`, type: 'success' });
     } catch (error) {
       setMessage({ text: `Error assigning validation: ${error.message}`, type: 'error' });
@@ -99,9 +100,27 @@ export default function ValidatePostersComponent() {
                     {poster.gyvunuKategorija}
                   </a>
                 </p>
+                <p className="text-sm font-semibold leading-6 text-gray-900">
+                  <a href="#" className="hover:underline">
+                    {poster.skelbimoValidacija}
+                  </a>
+                </p>
                 <p className="mt-1 flex text-xs leading-5 text-gray-500">
                   {poster.pavadinimas}
                 </p>
+                <p className="mt-1 flex text-xs leading-5 text-gray-500">
+                  {poster.kaina}
+                </p>
+                <p className="mt-1 flex text-xs leading-5 text-gray-500">
+                  {poster.aprasas}
+                </p>
+                <div className="aspect-h-1 aspect-w-1 w-1/3 overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
+                    <img
+                        src={poster.nuotrauka}
+                        alt={poster.pavadinimas}
+                        className="h-full w-full object-cover object-center group-hover:opacity-75"
+                    />
+                </div>
               </div>
             </div>
             <div className="flex items-center gap-x-6">
