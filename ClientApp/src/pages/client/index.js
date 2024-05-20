@@ -14,13 +14,10 @@ import AddWishesPage from "./addWishesPage/addWishesPage";
 import AddProductPage from "./addProductPage/addProductPage";
 import EditWishPage from "./editWishesPage/editWishesPage";
 import { AuthProvider } from "../../AuthContext";
-<<<<<<< HEAD
 import AdminRegisterPage from "../admin/adminRegisterPage/adminRegisterPage";
 import UserListPage from "../admin/userListPage/userListPage";
-=======
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
->>>>>>> origin/Stripe
 
 // const userNavigation = [
 //   { name: "Mano paskyra"},

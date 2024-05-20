@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ziIdlC47c2G52cOTINeKlgP2a3WOLA6z6kziOgdvAwjzzcptE+yGSZBTWRo3bWe9DWWYsDndmPO5GV93Ptn9dw==",
+  "dgSpecHash": "J8UZA04gkxY8ikkip1sUJbh6lIu07GWqil1I2mpz2B0/cq1mS+ZHZoIFPP6dSQMYjZUq0CzeHA2kwmAKE7HrhA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\API\\API.csproj",
+  "projectFilePath": "c:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\API\\API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\auste\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\auste\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\8.0.4\\microsoft.aspnetcore.authentication.jwtbearer.8.0.4.nupkg.sha512",
@@ -77,12 +77,6 @@
     "C:\\Users\\auste\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
   ],
   "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\API\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    },
     {
       "code": "NU1701",
       "level": "Warning",

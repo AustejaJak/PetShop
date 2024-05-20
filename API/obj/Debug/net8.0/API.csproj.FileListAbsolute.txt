@@ -615,10 +615,8 @@ C:\Users\fish\Desktop\crangeeee\PetShop\API\bin\Debug\net8.0\Stripe.dll
 >>>>>>> EditWishes-and-similarproducts
 C:\Users\auste\Desktop\KTU\3 kursas\PSA\PetShop\api\bin\Debug\net8.0\RestSharp.dll
 C:\Users\auste\Desktop\KTU\3 kursas\PSA\PetShop\api\bin\Debug\net8.0\Stripe.dll
-<<<<<<< HEAD
 C:\Users\jusja\Documents\GitHub\PetShop\API\bin\Debug\net8.0\RestSharp.dll
 C:\Users\jusja\Documents\GitHub\PetShop\API\bin\Debug\net8.0\Stripe.dll
-=======
 C:\Users\fish\Desktop\crangeeee\PetShop\API\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
 C:\Users\fish\Desktop\crangeeee\PetShop\API\bin\Debug\net8.0\Newtonsoft.Json.dll
 C:\Users\fish\Desktop\crangeeee\PetShop\API\bin\Debug\net8.0\Stripe.net.dll
@@ -633,3 +631,16 @@ C:\Users\fish\Desktop\crangeeee\PetShop\API\bin\Debug\net8.0\runtimes\win\lib\ne
 C:\Users\fish\Desktop\crangeeee\PetShop\API\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\fish\Desktop\crangeeee\PetShop\API\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 >>>>>>> origin/Stripe
+C:\Users\auste\Desktop\KTU\3 kursas\PSA\PetShop\api\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\auste\Desktop\KTU\3 kursas\PSA\PetShop\api\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\auste\Desktop\KTU\3 kursas\PSA\PetShop\api\bin\Debug\net8.0\Stripe.net.dll
+C:\Users\auste\Desktop\KTU\3 kursas\PSA\PetShop\api\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
+C:\Users\auste\Desktop\KTU\3 kursas\PSA\PetShop\api\bin\Debug\net8.0\System.Drawing.Common.dll
+C:\Users\auste\Desktop\KTU\3 kursas\PSA\PetShop\api\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\auste\Desktop\KTU\3 kursas\PSA\PetShop\api\bin\Debug\net8.0\System.Security.Permissions.dll
+C:\Users\auste\Desktop\KTU\3 kursas\PSA\PetShop\api\bin\Debug\net8.0\System.Windows.Extensions.dll
+C:\Users\auste\Desktop\KTU\3 kursas\PSA\PetShop\api\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\auste\Desktop\KTU\3 kursas\PSA\PetShop\api\bin\Debug\net8.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+C:\Users\auste\Desktop\KTU\3 kursas\PSA\PetShop\api\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+C:\Users\auste\Desktop\KTU\3 kursas\PSA\PetShop\api\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\auste\Desktop\KTU\3 kursas\PSA\PetShop\api\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
