@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import SelectMenuComponent from '../selectMenuComponent/selectMenuComponent';
 
 export default function FormLayoutComponent() {
     const navigate = useNavigate();
@@ -14,10 +13,25 @@ export default function FormLayoutComponent() {
         Nuotrauka: '',
         SkelbimoValidacija: 'false',
     });
+    const [error, setError] = useState('');
+
+    const categories = [
+        'Šunų prekės',
+        'Kačių prekės',
+        'Graužikų prekės',
+        'Paukščių prekės',
+        'Žuvų prekės'
+    ];
 
     const handleSubmit = async (event) => {
-        console.log('Poster adding');
         event.preventDefault();
+        // Check for empty fields
+        for (const key in formData) {
+            if (formData[key] === '') {
+                setError('Prašome užpildykite visus laukus');
+                return;
+            }
+        }
         try {
             const token = localStorage.getItem('token');
             const formDataJson = JSON.stringify(formData);
@@ -30,12 +44,12 @@ export default function FormLayoutComponent() {
                         'Authorization': 'Bearer ' + token
                     }
                 }
-
             );
             console.log('Poster added:', response.data);
             navigate('/shop/:category');
         } catch (error) {
-            console.error('Error adding poster:', error.response?.data || error.message); // More detailed error logging
+            setError(error.response?.data || error.message);
+            console.error('Error adding poster:', error.response?.data || error.message);
         }
     };
 
@@ -51,12 +65,39 @@ export default function FormLayoutComponent() {
         <form onSubmit={handleSubmit}>
             <div className="space-y-12 mx-80 my-20">
                 <div className="border-b border-gray-900/10 pb-12">
-                    <h2 className="text-base font-semibold leading-7 text-gray-900">Add Poster</h2>
+                    <h2 className="text-base font-semibold leading-7 text-gray-900">Pridėti naują skelbimą</h2>
                     <p className="mt-1 text-sm leading-6 text-gray-600">
-                        Add a new poster
+                        Pridėti naują skelbimą į parduotuvę.
                     </p>
+                    {error && (
+                        <div className="mb-4 text-sm text-red-600">
+                            {error}
+                        </div>
+                    )}
                     <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                        {['GyvunuKategorija', 'Pavadinimas', 'Aprasas', 'Nuotrauka'].map((field) => (
+                        <div className="sm:col-span-4">
+                            <label htmlFor="GyvunuKategorija" className="block text-sm font-medium leading-6 text-gray-900">
+                                Gyvunu Kategorija
+                            </label>
+                            <div className="mt-2">
+                                <select
+                                    name="GyvunuKategorija"
+                                    id="GyvunuKategorija"
+                                    className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                    value={formData.GyvunuKategorija}
+                                    onChange={handleChange}
+                                >
+                                    <option value="">Pasirinkite kategorija</option>
+                                    {categories.map((category) => (
+                                        <option key={category} value={category}>
+                                            {category}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+
+                        {['Pavadinimas', 'Aprasas', 'Nuotrauka'].map((field) => (
                             <div className="sm:col-span-4" key={field}>
                                 <label htmlFor={field} className="block text-sm font-medium leading-6 text-gray-900">
                                     {field}
@@ -73,6 +114,7 @@ export default function FormLayoutComponent() {
                                 </div>
                             </div>
                         ))}
+
                         <div className="sm:col-span-4">
                             <label htmlFor="Kiekis" className="block text-sm font-medium leading-6 text-gray-900">
                                 Kiekis

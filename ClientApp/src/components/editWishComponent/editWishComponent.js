@@ -12,6 +12,14 @@ export default function EditWishComponent() {
         tiekejas: ''
     });
 
+    const categories = [
+        'Šunų prekės',
+        'Kačių prekės',
+        'Graužikų prekės',
+        'Paukščių prekės',
+        'Žuvų prekės'
+    ];
+
     useEffect(() => {
         async function fetchWish() {
             try {
@@ -19,8 +27,7 @@ export default function EditWishComponent() {
                 const response = await axios.get(`http://localhost:5088/api/Wish/${wishId}`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`
-                    },
-                    formData
+                    }
                 });
                 console.log('Fetched wish data:', response.data);
                 setFormData(response.data);
@@ -70,7 +77,7 @@ export default function EditWishComponent() {
 
                     <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                         <div className="sm:col-span-4">
-                            <label htmlFor="ProduktoPavadinimas" className="block text-sm font-medium leading-6 text-gray-900">
+                            <label htmlFor="produktoPavadinimas" className="block text-sm font-medium leading-6 text-gray-900">
                                 Produkto pavadinimas
                             </label>
                             <div className="mt-2">
@@ -87,30 +94,35 @@ export default function EditWishComponent() {
                         </div>
 
                         <div className="sm:col-span-4">
-                            <label htmlFor="Kategorija" className="block text-sm font-medium leading-6 text-gray-900">
+                            <label htmlFor="kategorija" className="block text-sm font-medium leading-6 text-gray-900">
                                 Produkto kategorija
                             </label>
                             <div className="mt-2">
-                                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                    <input
-                                        type="text"
-                                        name="kategorija"
-                                        value={formData.kategorija}
-                                        onChange={handleChange}
-                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    />
-                                </div>
+                                <select
+                                    name="kategorija"
+                                    id="kategorija"
+                                    value={formData.kategorija}
+                                    onChange={handleChange}
+                                    className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                >
+                                    <option value="">Pasirinkite kategoriją</option>
+                                    {categories.map((category) => (
+                                        <option key={category} value={category}>
+                                            {category}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
                         </div>
-                        
+
                         <div className="sm:col-span-4">
-                            <label htmlFor="Kiekis" className="block text-sm font-medium leading-6 text-gray-900">
+                            <label htmlFor="kiekis" className="block text-sm font-medium leading-6 text-gray-900">
                                 Kiekis
                             </label>
                             <div className="mt-2">
                                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                     <input
-                                        ttype="text"
+                                        type="text"
                                         name="kiekis"
                                         value={formData.kiekis}
                                         onChange={handleChange}
@@ -119,15 +131,15 @@ export default function EditWishComponent() {
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div className="sm:col-span-4">
-                            <label htmlFor="Tiekejas" className="block text-sm font-medium leading-6 text-gray-900">
+                            <label htmlFor="tiekejas" className="block text-sm font-medium leading-6 text-gray-900">
                                 Tiekėjas
                             </label>
                             <div className="mt-2">
                                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                     <input
-                                        ttype="text"
+                                        type="text"
                                         name="tiekejas"
                                         value={formData.tiekejas}
                                         onChange={handleChange}
@@ -136,10 +148,8 @@ export default function EditWishComponent() {
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
-
             </div>
 
             <div className="mt-6 flex items-center justify-end gap-x-6 mx-80 my-5">

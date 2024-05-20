@@ -120,13 +120,17 @@ namespace API.Logic
         [HttpGet("GetcartId")]
         private string GetCartId()
         {
-            var sessionCartId = _httpContextAccessor.HttpContext.Session.GetString(CartSessionKey);
-            if (string.IsNullOrEmpty(sessionCartId))
+            // Get the username from the JWT token
+            var username = User.Identity?.Name;
+
+            // Use the username as the cart identifier
+            if (string.IsNullOrEmpty(username))
             {
-                sessionCartId = _httpContextAccessor.HttpContext.User.Identity?.Name ?? Guid.NewGuid().ToString();
-                _httpContextAccessor.HttpContext.Session.SetString(CartSessionKey, sessionCartId);
+                // If the username is not available (which shouldn't happen in authenticated requests), generate a new identifier
+                return Guid.NewGuid().ToString();
             }
-            return sessionCartId;
+
+            return username;
         }
 
     }
