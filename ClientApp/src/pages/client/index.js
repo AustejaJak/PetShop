@@ -16,6 +16,7 @@ import EditWishPage from "./editWishesPage/editWishesPage";
 import { AuthProvider } from "../../AuthContext";
 import AdminRegisterPage from "../admin/adminRegisterPage/adminRegisterPage";
 import UserListPage from "../admin/userListPage/userListPage";
+import ProductValidationPage from "../admin/productValidationPage/productValidationPage";
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 
@@ -42,6 +43,7 @@ const Client = () => {
           <Route path={Routes.client.login} element={<SignInPage />} />
           <Route path={Routes.admin.register} element={<AdminRegisterPage />} />
           <Route path={Routes.admin.base} element={<UserListPage />} />
+          <Route path={Routes.admin.products} element={<ProductValidationPage />} />
           <Route path={Routes.client.category} element={<ProductPage />} />
           <Route path={Routes.client.individualProduct} element={<ProductOverviewPage />} />
           <Route path={Routes.client.profile} element={<ProfilePage />} />
