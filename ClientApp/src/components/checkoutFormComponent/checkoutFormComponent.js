@@ -5,6 +5,7 @@ import Routes from "../../routes/routes";
 import axios from 'axios';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
+import PaymentDialogComponent from '../paymentDialogComponent/paymentDialogComponent';
 
 // Initialize Stripe with your publishable key
 const stripePromise = loadStripe("pk_test_51PHusJ2NpebX988Jy3bLgHLc85Y05gwFLgz2uBRjfKZamnT10RMSCONOOXcw3iDmpog7VTxpWyo3e2EPC65i5lIZ00unEIc6Tp");
@@ -15,6 +16,8 @@ export default function CheckoutFormComponent() {
   const [clientSecret, setClientSecret] = useState('');
   const stripe = useStripe();
   const elements = useElements();
+
+  const [paymentSuccess, setPaymentSuccess] = useState(false); 
 
   const fetchCartItems = async () => {
     try {
@@ -101,6 +104,12 @@ export default function CheckoutFormComponent() {
         // Handle error appropriately, e.g., display an error message to the user
       } else if (paymentIntent && paymentIntent.status === 'succeeded') {
         console.log('Payment succeeded:', paymentIntent);
+        setPaymentSuccess(true);
+        await axios.post('http://localhost:5088/api/Cart/DeleteCart', null, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
         // Handle successful payment (e.g., redirect to a success page, show a confirmation message, etc.)
       }
     } catch (error) {
@@ -128,6 +137,7 @@ export default function CheckoutFormComponent() {
 
   return (
     <div className="bg-white">
+      {paymentSuccess && <PaymentDialogComponent />}
       <div className="fixed left-0 top-0 hidden h-full w-1/2 bg-white lg:block" aria-hidden="true" />
       <div className="fixed right-0 top-0 hidden h-full w-1/2 bg-gray-50 lg:block" aria-hidden="true" />
 

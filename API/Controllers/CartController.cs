@@ -133,5 +133,29 @@ namespace API.Logic
             return username;
         }
 
+        [HttpPost("DeleteCart")]
+        public IActionResult DeleteCart()
+        {
+            var shoppingCartId = GetCartId();
+
+            // Find all cart items belonging to the current user
+            var cartItems = _db.CartItems.Where(c => c.KrepselioNr == shoppingCartId).ToList();
+
+            // If no cart items found, return a message
+            if (cartItems.Count == 0)
+            {
+                return NotFound("Cart is already empty.");
+            }
+
+            // Remove all cart items from the database
+            _db.CartItems.RemoveRange(cartItems);
+
+            // Save the changes to the database
+            _db.SaveChanges();
+
+            return Ok("Cart deleted successfully.");
+        }
+
+
     }
 }
