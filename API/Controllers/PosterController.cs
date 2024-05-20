@@ -99,5 +99,18 @@ namespace API.Controllers
 
             return Ok(similarPosters);
         }
+        [HttpPost("set-validation/{id}/{validation}")]
+        [Authorize(Roles = "Admin")] // Only allow admins to assign admin role
+        public async Task<IActionResult> SetValidation(string validation, int id)
+        {
+            var poster = await _context.Posters.FindAsync(id);
+            if (poster == null)
+            {
+                return NotFound();
+            }
+            poster.SkelbimoValidacija = validation;
+            await _context.SaveChangesAsync();
+            return Ok(poster);
+        }
     }
 }
