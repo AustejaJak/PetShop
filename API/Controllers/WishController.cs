@@ -105,5 +105,20 @@ namespace API.Controllers
         {
             return _context.Wishes.Any(e => e.NoroNr == id);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteWish(int id)
+        {
+            var wish = await _context.Wishes.FindAsync(id);
+            if (wish == null)
+            {
+                return NotFound();
+            }
+
+            _context.Wishes.Remove(wish);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }

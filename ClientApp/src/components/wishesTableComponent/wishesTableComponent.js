@@ -26,6 +26,20 @@ export default function WishesTableComponent() {
         fetchWishes();
     }, []);
 
+    const deleteWish = async (noroNr) => {
+        try {
+            await axios.delete(`http://localhost:5088/api/Wish/${noroNr}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+            // Remove the deleted wish from the state
+            setWishes(wishes.filter(wish => wish.noroNr !== noroNr));
+        } catch (error) {
+            console.error('Error deleting wish:', error);
+        }
+    };
+
     return (
         <div className="px-4 sm:px-6 lg:px-8 mx-80 my-20">
             <div className="sm:flex sm:items-center">
@@ -76,8 +90,13 @@ export default function WishesTableComponent() {
                                             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{wish.tiekejas}</td>
                                             <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
                                                 <a href={`/edit-wish/${wish.noroNr}`} className="text-indigo-600 hover:text-indigo-900">
-                                                    Edit<span className="sr-only">, {wish.produktoPavadinimas}</span>
+                                                    Redaguoti<span className="sr-only">, {wish.produktoPavadinimas}</span>
                                                 </a>
+                                            </td>
+                                            <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+                                                <button onClick={() => deleteWish(wish.noroNr)} className="text-red-600 hover:text-red-900">
+                                                    Ištrinti<span className="sr-only">, {wish.produktoPavadinimas}</span>
+                                                </button>
                                             </td>
                                         </tr>
                                     </Fragment>
