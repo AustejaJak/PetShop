@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\api\\API.csproj": {}
+    "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\API\\API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\api\\API.csproj": {
+    "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\API\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\api\\API.csproj",
+        "projectUniqueName": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\API\\API.csproj",
         "projectName": "API",
-        "projectPath": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\api\\API.csproj",
+        "projectPath": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\API\\API.csproj",
         "packagesPath": "C:\\Users\\auste\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\api\\obj\\",
+        "outputPath": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\auste\\AppData\\Roaming\\NuGet\\NuGet.Config",
