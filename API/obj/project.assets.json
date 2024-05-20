@@ -3716,11 +3716,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\API\\API.csproj",
+      "projectUniqueName": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\api\\API.csproj",
       "projectName": "API",
-      "projectPath": "c:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\API\\API.csproj",
+      "projectPath": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\api\\API.csproj",
       "packagesPath": "C:\\Users\\auste\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\API\\obj\\",
+      "outputPath": "C:\\Users\\auste\\Desktop\\KTU\\3 kursas\\PSA\\PetShop\\api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\auste\\AppData\\Roaming\\NuGet\\NuGet.Config",

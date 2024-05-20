@@ -69,6 +69,7 @@ export default function CheckoutFormComponent() {
           cost,
 
         });
+        console.log(response.data);
         console.log(response.data.clientSecret);
         setClientSecret(response.data.clientSecret);
         return response.data.clientSecret;
@@ -79,7 +80,9 @@ export default function CheckoutFormComponent() {
 
     const clientSecret = await createPaymentIntent();
 
-    const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+    const stringClientSecret = clientSecret.toString();
+
+    const { error, paymentIntent } = await stripe.confirmCardPayment(stringClientSecret, {
       payment_method: {
         card: elements.getElement(CardElement),
         billing_details: {

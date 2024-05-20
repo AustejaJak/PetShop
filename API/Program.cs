@@ -10,6 +10,12 @@ using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configuration
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+// Configure Stripe API key
+StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
+
 // Add services to the container.
 builder.Services.AddControllers();
 
@@ -31,28 +37,26 @@ builder.Services.AddAuthentication(options =>
 })   
 
 // 4. JWT
-    .AddJwtBearer(options =>
+.AddJwtBearer(options =>
+{
+    options.SaveToken = true;
+    options.RequireHttpsMetadata = false;
+    options.TokenValidationParameters = new TokenValidationParameters()
     {
-        options.SaveToken = true;
-        options.RequireHttpsMetadata = false;
-        options.TokenValidationParameters = new TokenValidationParameters()
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ClockSkew = TimeSpan.Zero,
-            
-            ValidAudience = builder.Configuration["JWT:ValidAudience"],
-            ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
-        };
-    });
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ClockSkew = TimeSpan.Zero,
+        
+        ValidAudience = builder.Configuration["JWT:ValidAudience"],
+        ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
+    };
+});
 
 // 5. Stripe
-StripeConfiguration.ApiKey = builder.Configuration["sk_test_51PHusJ2NpebX988JGdtxrJPUBFHIgv9yGIDziPd0LdNOMXo9p6htMvlhoY2EAfSOM6e6I0ZsSbgQP9WfU5iwbIc300aFa162Xt"];
 builder.Services.AddScoped<PaymentIntentService>();
-builder.Services.AddControllers();
 
 // Add IHttpContextAccessor
 builder.Services.AddHttpContextAccessor();
@@ -141,3 +145,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
