@@ -52,53 +52,63 @@ export default function CheckoutFormComponent() {
   }, [cartItems]);
 
   const handlePayment = async (event) => {
-    event.preventDefault();
-
-    if (!stripe || !elements) {
-      return;
-    }
-
-    // Create PaymentIntent and fetch clientSecret
-    const createPaymentIntent = async () => {
-      try {
-        const cost = (totalPrice + 3.00);
-        const response = await axios.post('http://localhost:5088/api/Stripe/Create-Payment-Intent', {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
-            },
-          cost,
-
-        });
-        console.log(response.data);
-        console.log(response.data.clientSecret);
-        setClientSecret(response.data.clientSecret);
-        return response.data.clientSecret;
-      } catch (error) {
-        console.error('Error creating PaymentIntent:', error);
+    try {
+      event.preventDefault();
+  
+      if (!stripe || !elements) {
+        console.error("Stripe or elements not initialized.");
+        return;
       }
-    };
-
-    const clientSecret = await createPaymentIntent();
-
-    const stringClientSecret = clientSecret.toString();
-
-    const { error, paymentIntent } = await stripe.confirmCardPayment(stringClientSecret, {
-      payment_method: {
-        card: elements.getElement(CardElement),
-        billing_details: {
-          // Include any necessary billing details here
+  
+      // Create PaymentIntent and fetch clientSecret
+      const createPaymentIntent = async () => {
+        try {
+          const amount = totalPrice + 3.00; // Ensure totalPrice is defined
+          console.log(amount);
+          const response = await axios.post(
+            'http://localhost:5088/api/Stripe/Create-Payment-Intent',
+              amount,
+            {
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+              },
+            }
+          );
+          console.log(response.data);
+          const clientSecret = response.data.clientSecret;
+          setClientSecret(clientSecret); // Assuming setClientSecret is a state setter function
+          return clientSecret;
+        } catch (error) {
+          console.error('Error creating PaymentIntent:', error);
+          throw error; // Rethrow the error to handle it in the outer try-catch block
+        }
+      };
+  
+      const clientSecret = await createPaymentIntent();
+  
+      const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: elements.getElement(CardElement),
+          billing_details: {
+            // Include any necessary billing details here
+          },
         },
-      },
-    });
-
-    if (error) {
-      console.error('Payment failed:', error);
-      // Handle error appropriately
-    } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-      console.log('Payment succeeded:', paymentIntent);
-      // Handle successful payment (e.g., redirect to a success page, show a confirmation message, etc.)
+      });
+  
+      if (error) {
+        console.error('Payment failed:', error);
+        // Handle error appropriately, e.g., display an error message to the user
+      } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+        console.log('Payment succeeded:', paymentIntent);
+        // Handle successful payment (e.g., redirect to a success page, show a confirmation message, etc.)
+      }
+    } catch (error) {
+      console.error('Error handling payment:', error);
+      // Handle error appropriately, e.g., display an error message to the user
     }
   };
+  
 
   const cartItemsDetails = cartItems.map((item) => (
     <li key={item.krepselioSkelbimoNr} className="flex items-start space-x-4 py-6">
@@ -304,9 +314,7 @@ export default function CheckoutFormComponent() {
             </section>
 
             <div className="mt-10">
-              <Elements stripe={stripePromise}>
                 <CardElement className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
-              </Elements>
             </div>
 
             <div className="mt-10 border-t border-gray-200 pt-6 sm:flex sm:items-center sm:justify-between">
