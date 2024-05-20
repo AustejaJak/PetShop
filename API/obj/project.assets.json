@@ -3711,19 +3711,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\jusja\\.nuget\\packages\\": {}
+    "C:\\Users\\fish\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jusja\\Documents\\GitHub\\PetShop\\API\\API.csproj",
+      "projectUniqueName": "C:\\Users\\fish\\Desktop\\crangeeee\\PetShop\\API\\API.csproj",
       "projectName": "API",
-      "projectPath": "C:\\Users\\jusja\\Documents\\GitHub\\PetShop\\API\\API.csproj",
-      "packagesPath": "C:\\Users\\jusja\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jusja\\Documents\\GitHub\\PetShop\\API\\obj\\",
+      "projectPath": "C:\\Users\\fish\\Desktop\\crangeeee\\PetShop\\API\\API.csproj",
+      "packagesPath": "C:\\Users\\fish\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\fish\\Desktop\\crangeeee\\PetShop\\API\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\jusja\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\fish\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3731,7 +3735,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -3809,7 +3812,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300-preview.24203.14/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
       }
     }
   },

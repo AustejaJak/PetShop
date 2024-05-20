@@ -22,13 +22,12 @@ export default function ValidatePostersComponent() {
         }
 
         const response = await axios.get('http://localhost:5088/api/Poster', {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
-                }
-            });
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-          const data = await response.data;
-          setPosters(data);
+        setPosters(response.data);
       } catch (error) {
         setMessage({ text: `Error fetching posters: ${error.message}`, type: 'error' });
       }
@@ -46,26 +45,21 @@ export default function ValidatePostersComponent() {
         return;
       }
 
-      const response = await axios.get(`http://localhost:5088/api/Poster/Delete/${posterId}`, {
-        method: 'DELETE',
+      await axios.delete(`http://localhost:5088/api/Poster/Delete/${posterId}`, {
         headers: {
-          'Authorization': `Bearer `+token,
-          'Content-Type': 'application/json'
-        }
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
       });
 
-      if (response.ok) {
-        setPosters(posters.filter(poster => poster.id !== posterId));
-        setMessage({ text: 'Poster deleted successfully', type: 'success' });
-      } else {
-        setMessage({ text: `Failed to delete poster: ${response.status}`, type: 'error' });
-      }
+      setPosters(posters.filter((poster) => poster.skelbimoNr !== posterId));
+      setMessage({ text: 'Poster deleted successfully', type: 'success' });
     } catch (error) {
       setMessage({ text: `Error deleting poster: ${error.message}`, type: 'error' });
     }
   };
 
-  const assignFalseRole = async (posterId) => {
+  const assignValidation = async (posterId, isValid) => {
     try {
       const token = localStorage.getItem('token');
 
@@ -74,38 +68,14 @@ export default function ValidatePostersComponent() {
         return;
       }
 
-      const response = await axios.post(`http://localhost:5088/api/Poster/set-validation/${posterId}/False`, {
-        method: 'POST',
+      await axios.post(`http://localhost:5088/api/Poster/set-validation/${posterId}/${isValid}`, null, {
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
       });
 
-      setMessage({ text: 'Validation assigned successfully', type: 'success' });
-    } catch (error) {
-      setMessage({ text: `Error assigning validation: ${error.message}`, type: 'error' });
-    }
-  };
-
-  const assignTrueRole = async (posterId) => {
-    try {
-      const token = localStorage.getItem('token');
-
-      if (!token) {
-        setMessage({ text: 'Authorization token not found.', type: 'error' });
-        return;
-      }
-
-      const response = await axios.post(`http://localhost:5088/api/Poster/set-validation/${posterId}/True`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      setMessage({ text: 'Validation assigned successfully', type: 'success' });
+      setMessage({ text: `Validation assigned successfully`, type: 'success' });
     } catch (error) {
       setMessage({ text: `Error assigning validation: ${error.message}`, type: 'error' });
     }
@@ -130,7 +100,7 @@ export default function ValidatePostersComponent() {
                   </a>
                 </p>
                 <p className="mt-1 flex text-xs leading-5 text-gray-500">
-                    {poster.pavadinimas}
+                  {poster.pavadinimas}
                 </p>
               </div>
             </div>
@@ -172,7 +142,7 @@ export default function ValidatePostersComponent() {
                             active ? 'bg-gray-50' : '',
                             'block px-3 py-1 text-sm leading-6 text-gray-900'
                           )}
-                          onClick={() => assignTrueRole(poster.skelbimoNr)}
+                          onClick={() => assignValidation(poster.skelbimoNr, 'True')}
                         >
                           Validuoti<span className="sr-only">, skelbimą</span>
                         </a>
@@ -186,7 +156,7 @@ export default function ValidatePostersComponent() {
                             active ? 'bg-gray-50' : '',
                             'block px-3 py-1 text-sm leading-6 text-gray-900'
                           )}
-                          onClick={() => assignFalseRole(poster.skelbimoNr)}
+                          onClick={() => assignValidation(poster.skelbimoNr, 'False')}
                         >
                           Nevaliduoti<span className="sr-only">, skelbimą</span>
                         </a>
