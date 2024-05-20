@@ -14,8 +14,13 @@ import AddWishesPage from "./addWishesPage/addWishesPage";
 import AddProductPage from "./addProductPage/addProductPage";
 import EditWishPage from "./editWishesPage/editWishesPage";
 import { AuthProvider } from "../../AuthContext";
+<<<<<<< HEAD
 import AdminRegisterPage from "../admin/adminRegisterPage/adminRegisterPage";
 import UserListPage from "../admin/userListPage/userListPage";
+=======
+import {Elements} from '@stripe/react-stripe-js';
+import {loadStripe} from '@stripe/stripe-js';
+>>>>>>> origin/Stripe
 
 // const userNavigation = [
 //   { name: "Mano paskyra"},
@@ -27,8 +32,9 @@ import UserListPage from "../admin/userListPage/userListPage";
 //   { name: "Kolekcija"},
 //   { name: "Parduotuvė"},
 // ];
-
+const stripePromise = loadStripe("pk_test_51PHusJ2NpebX988Jy3bLgHLc85Y05gwFLgz2uBRjfKZamnT10RMSCONOOXcw3iDmpog7VTxpWyo3e2EPC65i5lIZ00unEIc6Tp");
 const Client = () => {
+  
   return (
     <>
       {/* <Header profileNavigation={userNavigation} navigation={navigation} /> */}
@@ -43,7 +49,14 @@ const Client = () => {
           <Route path={Routes.client.individualProduct} element={<ProductOverviewPage />} />
           <Route path={Routes.client.profile} element={<ProfilePage />} />
           <Route path={Routes.client.shoppingBag} element={<CheckoutPage />} />
-          <Route path={Routes.client.checkout} element={<CheckoutFormPage />} />
+          <Route 
+            path={Routes.client.checkout} 
+            element={
+              <Elements stripe={stripePromise}>
+                <CheckoutFormPage />
+              </Elements>
+            } 
+          />
           <Route path={Routes.client.orderHistory} element={<OrderHistoryPage />} />
           <Route path={Routes.client.wishes} element={<WishesPage />} />
           <Route path={Routes.client.addWishes} element={<AddWishesPage />} />
